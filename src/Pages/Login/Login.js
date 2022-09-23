@@ -1,4 +1,6 @@
+import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+import { setLocalStorage } from '../../Services/LocalStorage';
 
 const MIN_NUMERO_PASSWORD = 6;
 
@@ -14,16 +16,25 @@ function Login() {
     const { emailInput, passwordInput } = inputState;
     const regexEmail = /\S+@\S+\.\S+/;
     const validateEmail = regexEmail.test(emailInput);
-    const validatePassword = passwordInput.length >= MIN_NUMERO_PASSWORD;
+    const validatePassword = passwordInput.length > MIN_NUMERO_PASSWORD;
     const validateLogin = validateEmail && validatePassword;
     setBtnState(!validateLogin);
   }, [inputState]);
+
+  const history = useHistory();
 
   const handleChange = ({ target: { name, value } }) => {
     setInputState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
+  };
+
+  const handleClick = () => {
+    setLocalStorage('user', { email: inputState.emailInput });
+    setLocalStorage('mealsToken', 1);
+    setLocalStorage('drinksToken', 1);
+    history.push('/meals');
   };
 
   return (
@@ -49,6 +60,7 @@ function Login() {
           type="button"
           data-testid="login-submit-btn"
           disabled={ btnState }
+          onClick={ handleClick }
         >
           Enter
         </button>
