@@ -1,39 +1,65 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import RecipesContext from '../../Context/RecipesContext';
 
 function SearchBar() {
+  const { fetchSearchedRecipe } = useContext(RecipesContext);
+  const [inputSearch, setInputsearch] = useState('');
+  const [typeRadio, setTypeRadio] = useState('');
+
+  const handleCLick = () => {
+    const infosSearch = { inputSearch, typeRadio };
+    fetchSearchedRecipe(infosSearch);
+  };
   return (
     <div>
-      <input type="search" placeholder="Search" data-testid="search-input" />
+      <input
+        type="search"
+        placeholder="Search"
+        data-testid="search-input"
+        onChange={ ({ target: { value } }) => setInputsearch(value) }
+      />
       <div>
         <label htmlFor="ingredient">
-          Ingredient
           <input
+            id="ingredient"
             type="radio"
-            name="ingredient"
+            name="radio-search"
             value="Ingredient"
             data-testid="ingredient-search-radio"
+            onChange={ ({ target: { value } }) => setTypeRadio(value) }
           />
+          Ingredient
         </label>
         <label htmlFor="name">
-          Name
           <input
+            id="name"
             type="radio"
-            name="name"
+            name="radio-search"
             value="Name"
             data-testid="name-search-radio"
+            onChange={ ({ target: { value } }) => setTypeRadio(value) }
           />
+          Name
         </label>
         <label htmlFor="firstLetter">
-          First Letter
           <input
+            id="firstLetter"
             type="radio"
-            name="firstLetter"
+            name="radio-search"
             value="First Letter"
             data-testid="first-letter-search-radio"
+            onChange={ ({ target: { value } }) => setTypeRadio(value) }
           />
+          First Letter
         </label>
       </div>
-      <button type="button" data-testid="exec-search-btn">Buscar</button>
+      <button
+        type="button"
+        onClick={ handleCLick }
+        data-testid="exec-search-btn"
+      >
+        Buscar
+      </button>
     </div>
   );
 }
