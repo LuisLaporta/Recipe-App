@@ -19,7 +19,12 @@ const getRecipe = async ({ typeRadio, inputSearch, pathname }) => {
   }
   const response = await fetch(URL);
   const data = await response.json();
-  return pathname === '/meals' ? data.meals : data.drinks;
+  let recipes = pathname === '/meals' ? data.meals : data.drinks;
+  if (!recipes) {
+    recipes = [];
+    global.alert('Sorry, we haven\'t found any recipes for these filters.');
+  }
+  return recipes;
 };
 
 export default getRecipe;
