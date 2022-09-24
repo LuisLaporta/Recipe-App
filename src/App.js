@@ -12,7 +12,6 @@ import RecipesProvider from './Context/RecipesProvider';
 
 function App() {
   return (
-
     <RecipesProvider>
       <BrowserRouter>
         <Switch>
