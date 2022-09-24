@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import RecipesContext from '../../Context/RecipesContext';
 
 function SearchBar() {
@@ -6,9 +7,10 @@ function SearchBar() {
   const [inputSearch, setInputsearch] = useState('');
   const [typeRadio, setTypeRadio] = useState('');
 
+  const { location: { pathname } } = useHistory();
+
   const handleCLick = () => {
-    const infosSearch = { inputSearch, typeRadio };
-    fetchSearchedRecipe(infosSearch);
+    fetchSearchedRecipe({ inputSearch, typeRadio, pathname });
   };
   return (
     <div>
