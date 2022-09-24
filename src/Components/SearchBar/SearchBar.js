@@ -1,17 +1,29 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../../Context/RecipesContext';
 
 function SearchBar() {
-  const { fetchSearchedRecipe } = useContext(RecipesContext);
+  const { fetchSearchedRecipe, searchedRecipe } = useContext(RecipesContext);
   const [inputSearch, setInputsearch] = useState('');
   const [typeRadio, setTypeRadio] = useState('');
 
-  const { location: { pathname } } = useHistory();
+  const history = useHistory();
+  const { location: { pathname } } = history;
+
+  useEffect(() => {
+    if (searchedRecipe.length === 1) {
+      const redirect = pathname === '/meals'
+        ? `/meals/${searchedRecipe[0].idMeal}`
+        : `/drinks/${searchedRecipe[0].idDrink}`;
+
+      history.push(redirect);
+    }
+  }, [searchedRecipe]);
 
   const handleCLick = () => {
     fetchSearchedRecipe({ inputSearch, typeRadio, pathname });
   };
+
   return (
     <div>
       <input

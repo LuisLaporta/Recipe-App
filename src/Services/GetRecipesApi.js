@@ -17,10 +17,9 @@ const getRecipe = async ({ typeRadio, inputSearch, pathname }) => {
   default:
     console.log('Error');
   }
-
   const response = await fetch(URL);
   const data = await response.json();
-  return data.meals;
+  return pathname === '/meals' ? data.meals : data.drinks;
 };
 
 export default getRecipe;
