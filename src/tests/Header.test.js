@@ -8,7 +8,7 @@ import Meals from '../Pages/Foods/Meals';
 const PROFILE_ICON = 'profile-top-btn';
 const SEARCH_ICON = 'search-top-btn';
 
-describe('', () => {
+describe('Testando o componente Header', () => {
   test('Verifica se os icones estão na tela', () => {
     renderWithRouter(<Meals />);
     expect(screen.getByTestId(PROFILE_ICON)).toBeInTheDocument();

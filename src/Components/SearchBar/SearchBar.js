@@ -11,7 +11,7 @@ function SearchBar() {
   const { location: { pathname } } = history;
 
   useEffect(() => {
-    if (searchedRecipe.length === 1) {
+    if (searchedRecipe?.length === 1) {
       const redirect = pathname === '/meals'
         ? `/meals/${searchedRecipe[0].idMeal}`
         : `/drinks/${searchedRecipe[0].idDrink}`;
@@ -19,10 +19,6 @@ function SearchBar() {
       history.push(redirect);
     }
   }, [searchedRecipe]);
-
-  const handleCLick = () => {
-    fetchSearchedRecipe({ inputSearch, typeRadio, pathname });
-  };
 
   return (
     <div>
@@ -69,7 +65,7 @@ function SearchBar() {
       </div>
       <button
         type="button"
-        onClick={ handleCLick }
+        onClick={ () => fetchSearchedRecipe({ inputSearch, typeRadio, pathname }) }
         data-testid="exec-search-btn"
       >
         Buscar

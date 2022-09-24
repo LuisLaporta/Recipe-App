@@ -7,7 +7,8 @@ function RecipesProvider({ children }) {
   const [searchedRecipe, setSearchedRecipe] = useState([]);
 
   const fetchSearchedRecipe = async (param) => {
-    setSearchedRecipe(await getRecipe(param));
+    const result = await getRecipe(param);
+    setSearchedRecipe(result);
   };
 
   const contextValue = {

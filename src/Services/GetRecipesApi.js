@@ -17,6 +17,7 @@ const getRecipe = async ({ typeRadio, inputSearch, pathname }) => {
   default:
     console.log('Error');
   }
+
   const response = await fetch(URL);
   const data = await response.json();
   let recipes = pathname === '/meals' ? data.meals : data.drinks;
