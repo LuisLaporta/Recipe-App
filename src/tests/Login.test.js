@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import App from '../App';
 import renderWithRouter from './Helpers/RenderWithRouter';
 
@@ -59,8 +59,9 @@ describe('Testando tela de Login', () => {
     expect(buttonSubmit).not.toBeDisabled();
   });
 
-  test('Verifica se o email e a senha corretas o botão é habilitado', async () => {
-    const { history } = renderWithRouter(<App />);
+  test('Verifica se o email e a senha corretas o botão é habilitado', () => {
+    renderWithRouter(<App />);
+
     const inputEmail = screen.getByTestId(EMAIL_INPUT);
     const inputPassword = screen.getByTestId(PASSWORD_INPUT);
     const buttonSubmit = screen.getByRole('button', { name: /enter/i });
@@ -69,8 +70,6 @@ describe('Testando tela de Login', () => {
     userEvent.type(inputPassword, '1234567');
     userEvent.click(buttonSubmit);
 
-    await waitFor(() => {
-      expect(history.location.pathname).toBe('/meals');
-    }, { timeout: 3000 });
+    expect(screen.getByRole('heading', { level: 1, nome: /meals/i })).toBeInTheDocument();
   });
 });
