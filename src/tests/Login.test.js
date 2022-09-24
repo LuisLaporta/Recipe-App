@@ -1,11 +1,12 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import App from '../App';
 import renderWithRouter from './Helpers/RenderWithRouter';
 
 const EMAIL_INPUT = 'email-input';
 const PASSWORD_INPUT = 'password-input';
+const CORRECT_EMAIL = 'teste@teste.com';
 
 describe('Testando tela de Login', () => {
   test('Verifica se os inputs estão na tela', () => {
@@ -31,7 +32,7 @@ describe('Testando tela de Login', () => {
     const inputPassword = screen.getByTestId(PASSWORD_INPUT);
     const buttonSubmit = screen.getByRole('button', { name: /enter/i });
 
-    userEvent.type(inputEmail, 'teste@teste.com');
+    userEvent.type(inputEmail, CORRECT_EMAIL);
     userEvent.type(inputPassword, '1234');
     expect(buttonSubmit).toBeDisabled();
   });
@@ -53,23 +54,23 @@ describe('Testando tela de Login', () => {
     const inputPassword = screen.getByTestId(PASSWORD_INPUT);
     const buttonSubmit = screen.getByRole('button', { name: /enter/i });
 
-    userEvent.type(inputEmail, 'teste@teste.com');
+    userEvent.type(inputEmail, CORRECT_EMAIL);
     userEvent.type(inputPassword, '1234567');
     expect(buttonSubmit).not.toBeDisabled();
   });
 
-  // test('Verifica se o email e a senha corretas o botão é habilitado', async () => {
-  //   const { history } = renderWithRouter(<App />);
-  //   const inputEmail = screen.getByTestId('EMAIL_INPUT');
-  //   const inputPassword = screen.getByTestId(PASSWORD_INPUT);
-  //   const buttonSubmit = screen.getByRole('button', { name: /enter/i });
+  test('Verifica se o email e a senha corretas o botão é habilitado', async () => {
+    const { history } = renderWithRouter(<App />);
+    const inputEmail = screen.getByTestId(EMAIL_INPUT);
+    const inputPassword = screen.getByTestId(PASSWORD_INPUT);
+    const buttonSubmit = screen.getByRole('button', { name: /enter/i });
 
-  //   userEvent.type(inputEmail, 'teste@teste.com');
-  //   userEvent.type(inputPassword, '1234567');
-  //   userEvent.click(buttonSubmit);
+    userEvent.type(inputEmail, CORRECT_EMAIL);
+    userEvent.type(inputPassword, '1234567');
+    userEvent.click(buttonSubmit);
 
-  //   await waitFor(() => {
-  //     expect(history.location.pathname).toBe('/meals');
-  //   }, { timeout: 3000 });
-  // });
+    await waitFor(() => {
+      expect(history.location.pathname).toBe('/meals');
+    }, { timeout: 3000 });
+  });
 });
