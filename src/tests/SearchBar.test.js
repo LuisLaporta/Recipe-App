@@ -11,6 +11,7 @@ import oneDrink from '../../cypress/mocks/oneDrink';
 
 const SEARCH_ICON = 'search-top-btn';
 const TEXT_INPUT = 'search-input';
+const BUTTO_ID = 'exec-search-btn';
 
 describe('Testando o componente SearchBar', () => {
   test('Verifica se o input de pesquisa está na tela', () => {
@@ -56,7 +57,7 @@ describe('Testando o componente SearchBar', () => {
     userEvent.type(textInput, 'arrabiata');
 
     const radioName = screen.getByTestId('name-search-radio');
-    const buttonSearch = screen.getByTestId('exec-search-btn');
+    const buttonSearch = screen.getByTestId(BUTTO_ID);
     userEvent.click(radioName);
     userEvent.click(buttonSearch);
 
@@ -75,7 +76,7 @@ describe('Testando o componente SearchBar', () => {
 
     const textInput = screen.getByTestId(TEXT_INPUT);
     const radioName = screen.getByTestId('name-search-radio');
-    const buttonSearch = screen.getByTestId('exec-search-btn');
+    const buttonSearch = screen.getByTestId(BUTTO_ID);
 
     userEvent.type(textInput, 'Aquamarine');
     userEvent.click(radioName);
@@ -96,7 +97,7 @@ describe('Testando o componente SearchBar', () => {
 
     const textInput = screen.getByTestId(TEXT_INPUT);
     const radioIngredient = screen.getByTestId('ingredient-search-radio');
-    const buttonSearch = screen.getByTestId('exec-search-btn');
+    const buttonSearch = screen.getByTestId(BUTTO_ID);
 
     userEvent.type(textInput, 'salmon');
     userEvent.click(radioIngredient);
@@ -117,7 +118,7 @@ describe('Testando o componente SearchBar', () => {
 
     const textInput = screen.getByTestId(TEXT_INPUT);
     const radioFirstLetter = screen.getByTestId('first-letter-search-radio');
-    const buttonSearch = screen.getByTestId('exec-search-btn');
+    const buttonSearch = screen.getByTestId(BUTTO_ID);
 
     userEvent.type(textInput, 'L');
     userEvent.click(radioFirstLetter);
