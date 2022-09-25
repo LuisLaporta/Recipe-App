@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../../Context/RecipesContext';
+import getRecipe from '../../Services/GetRecipesApi';
 
 function SearchBar() {
-  const { fetchSearchedRecipe, searchedRecipe } = useContext(RecipesContext);
+  const { setSearchedRecipe, searchedRecipe } = useContext(RecipesContext);
   const [inputSearch, setInputsearch] = useState('');
   const [typeRadio, setTypeRadio] = useState('');
 
@@ -12,13 +13,21 @@ function SearchBar() {
 
   useEffect(() => {
     if (searchedRecipe?.length === 1) {
+      console.log(pathname);
       const redirect = pathname === '/meals'
         ? `/meals/${searchedRecipe[0].idMeal}`
         : `/drinks/${searchedRecipe[0].idDrink}`;
 
       history.push(redirect);
+      console.log(redirect);
     }
   }, [searchedRecipe]);
+
+  const handleClick = async () => {
+    const recipe = await getRecipe({ inputSearch, typeRadio, pathname });
+    setSearchedRecipe(recipe);
+    console.log('setttou');
+  };
 
   return (
     <div>
@@ -65,7 +74,7 @@ function SearchBar() {
       </div>
       <button
         type="button"
-        onClick={ () => fetchSearchedRecipe({ inputSearch, typeRadio, pathname }) }
+        onClick={ handleClick }
         data-testid="exec-search-btn"
       >
         Buscar

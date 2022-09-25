@@ -6,7 +6,7 @@ import Meals from '../Pages/Foods/Meals';
 import oneMeal from '../../cypress/mocks/oneMeal';
 import App from '../App';
 import mealIngredients from '../../cypress/mocks/mealIngredients';
-import { meals } from '../../cypress/mocks/meals';
+import meals from '../../cypress/mocks/meals';
 import oneDrink from '../../cypress/mocks/oneDrink';
 
 const SEARCH_ICON = 'search-top-btn';
@@ -43,7 +43,7 @@ describe('Testando o componente SearchBar', () => {
   });
 
   test('Verifica se buscar por uma receita e retornar apenas um item, o usuario é redirecionado para outra página', async () => {
-    const { history } = renderWithRouter(<App />, '/meals');
+    renderWithRouter(<App />, '/meals');
 
     global.fetch = jest.fn().mockResolvedValue({
       json: jest.fn().mockResolvedValue(oneMeal),
@@ -53,22 +53,18 @@ describe('Testando o componente SearchBar', () => {
     userEvent.click(iconSearch);
 
     const textInput = screen.getByTestId(TEXT_INPUT);
-    const radioIngredient = screen.getByLabelText(/name/i);
-    const buttonSearch = screen.getByRole('button', { name: /buscar/i });
+    userEvent.type(textInput, 'arrabiata');
 
-    userEvent.type(textInput, 'Arrabiata');
-    userEvent.click(radioIngredient);
+    const radioName = screen.getByTestId('name-search-radio');
+    const buttonSearch = screen.getByTestId('exec-search-btn');
+    userEvent.click(radioName);
     userEvent.click(buttonSearch);
 
-    const { pathname } = history.location;
-
-    await waitFor(() => {
-      expect(pathname).toBe('/meals/52771');
-    }, { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/mealid/i)).toBeInTheDocument(), { timeout: 3000 });
   });
 
   test('Verifica se buscar por um drink e retornar apenas um item, o usuario é redirecionado para outra página', async () => {
-    const { history } = renderWithRouter(<App />, '/drinks');
+    renderWithRouter(<App />, '/drinks');
 
     global.fetch = jest.fn().mockResolvedValue({
       json: jest.fn().mockResolvedValue(oneDrink),
@@ -78,18 +74,14 @@ describe('Testando o componente SearchBar', () => {
     userEvent.click(iconSearch);
 
     const textInput = screen.getByTestId(TEXT_INPUT);
-    const radioIngredient = screen.getByLabelText(/name/i);
-    const buttonSearch = screen.getByRole('button', { name: /buscar/i });
+    const radioName = screen.getByTestId('name-search-radio');
+    const buttonSearch = screen.getByTestId('exec-search-btn');
 
     userEvent.type(textInput, 'Aquamarine');
-    userEvent.click(radioIngredient);
+    userEvent.click(radioName);
     userEvent.click(buttonSearch);
 
-    const { pathname } = history.location;
-
-    await waitFor(() => {
-      expect(pathname).toBe('/drinks/178319');
-    }, { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/drinkid/i)).toBeInTheDocument(), { timeout: 3000 });
   });
 
   test('Verifica se buscar por ingredient retorna todas as receitas com este ingredient', async () => {
@@ -103,14 +95,14 @@ describe('Testando o componente SearchBar', () => {
     userEvent.click(iconSearch);
 
     const textInput = screen.getByTestId(TEXT_INPUT);
-    const radioIngredient = screen.getByLabelText(/ingredient/i);
-    const buttonSearch = screen.getByRole('button', { name: /buscar/i });
+    const radioIngredient = screen.getByTestId('ingredient-search-radio');
+    const buttonSearch = screen.getByTestId('exec-search-btn');
 
     userEvent.type(textInput, 'salmon');
     userEvent.click(radioIngredient);
     userEvent.click(buttonSearch);
 
-    expect(screen.getByRole('heading', { level: 3, name: /honey teriyaki/i })).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByTestId('0-card-name')).toBeInTheDocument(), { timeout: 3000 });
   });
 
   test('Verifica se buscar por First Letter retorna todas as receitas com esta letra', async () => {
@@ -124,13 +116,13 @@ describe('Testando o componente SearchBar', () => {
     userEvent.click(iconSearch);
 
     const textInput = screen.getByTestId(TEXT_INPUT);
-    const radioIngredient = screen.getByLabelText(/first letter/i);
-    const buttonSearch = screen.getByRole('button', { name: /buscar/i });
+    const radioFirstLetter = screen.getByTestId('first-letter-search-radio');
+    const buttonSearch = screen.getByTestId('exec-search-btn');
 
-    userEvent.type(textInput, 'l');
-    userEvent.click(radioIngredient);
+    userEvent.type(textInput, 'L');
+    userEvent.click(radioFirstLetter);
     userEvent.click(buttonSearch);
 
-    expect(screen.getByRole('heading', { level: 3, name: /lamb tomato and sweet spices/i })).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByTestId('0-card-name')).toBeInTheDocument(), { timeout: 3000 });
   });
 });

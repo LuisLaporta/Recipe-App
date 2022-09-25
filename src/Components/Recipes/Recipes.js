@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import RecipesContext from '../../Context/RecipesContext';
 
 const LIMIT_NUMBER = 12;
@@ -7,7 +7,7 @@ const LIMIT_NUMBER = 12;
 function Recipes() {
   const { searchedRecipe } = useContext(RecipesContext);
   const [recipesFound, setRecipesFound] = useState([]);
-  const { location: { pathname } } = useHistory();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const limitRecipes = searchedRecipe?.slice(0, LIMIT_NUMBER);
