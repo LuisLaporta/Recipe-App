@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SearchBar from '../SearchBar/SearchBar';
-// import profileIcon from './images/profileIcon.svg';
-// import searchIcon from './images/searchIcon.svg';
+import profileIcon from '../../images/profileIcon.svg';
+import searchIcon from '../../images/searchIcon.svg';
 
 function Header({ title, disabledSearch }) {
   const [searchBar, setSearchBar] = useState(false);
@@ -13,7 +13,7 @@ function Header({ title, disabledSearch }) {
     <div>
       <button type="button" onClick={ () => history.push('/profile') }>
         <img
-          src="./images/profileIcon.svg"
+          src={ profileIcon }
           alt="Profile Icon"
           data-testid="profile-top-btn"
         />
@@ -21,7 +21,7 @@ function Header({ title, disabledSearch }) {
       {disabledSearch && (
         <button type="button" onClick={ () => setSearchBar(!searchBar) }>
           <img
-            src="./images/searchIcon.svg"
+            src={ searchIcon }
             alt="Search Icon"
             data-testid="search-top-btn"
           />
