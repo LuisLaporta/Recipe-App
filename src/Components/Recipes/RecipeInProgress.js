@@ -1,47 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-// const LIMIT = 20;
+const arrayNum = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+  '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
 
 function RecipeInProgress() {
   const [obj, setObj] = useState({});
-  // const [ingredients, setIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
   const { pathname } = useLocation();
   const local = pathname.split('/');
+  const correctUrl = local[1] === 'meals' ? 'themealdb' : 'thecocktaildb';
 
   const getApi = async () => {
-    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${local[2]}`);
+    const response = await fetch(`https://www.${correctUrl}.com/api/json/v1/1/lookup.php?i=${local[2]}`);
     const data = await response.json();
-    return setObj(data.meals[0]);
+    const correctInfo = local[1] === 'meals' ? data.meals : data.drinks;
+    console.log(data);
+    return setObj(correctInfo[0]);
   };
 
   useEffect(() => {
     getApi();
   }, []);
 
-  // const structuringRecipe = () => {
-  //   let array = [];
-  //   let nArray = [];
-  //   for (let i = 0; i < LIMIT; i + i) {
-  //     const num = 1 + i;
-  //     nArray = [...nArray, num];
-  //   }
-  //   nArray.map((n) => {
-  //     const ingredient = `strIngredient${n}`;
-  //     const measure = `strMeasure${n}`;
-  //     const arrayIngredients = obj[ingredient];
-  //     const arrayMeasures = obj[measure];
-  //     const instructions = `${arrayMeasures} ${arrayIngredients}`;
-  //     const result = instructions !== 'null null' && instructions !== ' '
-  //       ? array = [...array, instructions] : ' ';
-  //     return result;
-  //   });
-  //   setIngredients(array);
-  // };
+  const structuringRecipe = () => {
+    let array = [];
+    arrayNum.map((n) => {
+      const ingredient = `strIngredient${n}`;
+      const measure = `strMeasure${n}`;
+      const arrayIngredients = obj[ingredient];
+      const arrayMeasures = obj[measure];
+      const instructions = `${arrayMeasures} ${arrayIngredients}`;
+      const valid = instructions !== 'null null' && instructions !== ' null';
+      const valid2 = instructions !== ' ' && instructions !== 'undefined undefined';
+      const result = valid && valid2 ? array = [...array, instructions] : ' ';
+      return result;
+    });
+    setIngredients(array);
+  };
 
-  // useEffect(() => {
-  //   structuringRecipe();
-  // }, [obj]);
+  useEffect(() => {
+    structuringRecipe();
+  }, [obj]);
 
   return (
     <div>
@@ -57,9 +57,16 @@ function RecipeInProgress() {
       <h1 data-testid="recipe-title">{obj.strMeal}</h1>
       <fieldset>
         INGREDIENTES
-        {/* {ingredients.map((m, index) => (
-          <p key={ index }>{m}</p>
-        ))} */}
+        {ingredients?.map((m, index) => (
+          <label
+            key={ index }
+            htmlFor={ m }
+            data-testid={ `${index}-ingredient-step` }
+          >
+            <input type="checkbox" name={ m } id={ index } />
+            {m}
+          </label>
+        ))}
       </fieldset>
       <h2>Instructions</h2>
       <p data-testid="instructions">{obj.strInstructions}</p>
