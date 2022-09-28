@@ -1,3 +1,5 @@
+import requestRecipesApi from './RequestRecipesApi';
+
 const getRecipe = async ({ typeRadio, inputSearch, pathname }) => {
   const correctPath = pathname === '/meals' ? 'themealdb' : 'thecocktaildb';
   let URL;
@@ -18,8 +20,7 @@ const getRecipe = async ({ typeRadio, inputSearch, pathname }) => {
     console.log('Error');
   }
 
-  const response = await fetch(URL);
-  const data = await response.json();
+  const data = await requestRecipesApi(URL);
   let recipes = pathname === '/meals' ? data.meals : data.drinks;
   if (!recipes) {
     recipes = [];
