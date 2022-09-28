@@ -59,7 +59,13 @@ function RecipeInProgress() {
       <fieldset>
         INGREDIENTES
         {ingredients?.map((m, index) => (
-          <ListIngredients key={ index } index={ index } m={ m } />
+          <ListIngredients
+            key={ index }
+            index={ index }
+            m={ m }
+            local={ local[1] }
+            idRecipe={ local[2] }
+          />
         ))}
       </fieldset>
       <h2>Instructions</h2>
