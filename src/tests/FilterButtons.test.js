@@ -5,8 +5,8 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import RenderWithRouter from './Helpers/RenderWithRouter';
 import mealCategories from '../../cypress/mocks/mealCategories';
-import meals from '../../cypress/mocks/meals';
 import drinkCategories from '../../cypress/mocks/drinkCategories';
+import meals from '../../cypress/mocks/meals';
 
 describe('Testa o componente FilterButtons', () => {
   test('Testa se o botão de filtro "Beef" está na tela', async () => {
