@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import App from '../App';
@@ -7,11 +7,6 @@ import RenderWithRouter from './Helpers/RenderWithRouter';
 import mealCategories from '../../cypress/mocks/mealCategories';
 import meals from '../../cypress/mocks/meals';
 import drinkCategories from '../../cypress/mocks/drinkCategories';
-import beefMeals from '../../cypress/mocks/beefMeals';
-
-const EMAIL_INPUT = 'email-input';
-const PASSWORD_INPUT = 'password-input';
-const CORRECT_EMAIL = 'teste@teste.com';
 
 describe('Testa o componente FilterButtons', () => {
   test('Testa se o botão de filtro "Beef" está na tela', async () => {
