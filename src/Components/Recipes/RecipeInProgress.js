@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import ListIngredients from './ListIngredients';
+import ShareIcon from '../../images/shareIcon.svg';
+import favorited from '../../images/blackHeartIcon.svg';
+import desFavorited from '../../images/whiteHeartIcon.svg';
+import { getLocalStorage, setLocalStorage } from '../../Services/LocalStorage';
 
 const arrayNum = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
   '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
@@ -8,20 +12,27 @@ const arrayNum = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
 function RecipeInProgress() {
   const [obj, setObj] = useState({});
   const [ingredients, setIngredients] = useState([]);
+  const [copiedLink, setCopiedLink] = useState('');
+  const [liked, setLiked] = useState();
   const { pathname } = useLocation();
   const local = pathname.split('/');
   const correctUrl = local[1] === 'meals' ? 'themealdb' : 'thecocktaildb';
+  const correctId = local[1] === 'meals' ? obj.idMeal : obj.idDrink;
 
   const getApi = async () => {
     const response = await fetch(`https://www.${correctUrl}.com/api/json/v1/1/lookup.php?i=${local[2]}`);
     const data = await response.json();
     const correctInfo = local[1] === 'meals' ? data.meals : data.drinks;
-    console.log(data);
     return setObj(correctInfo[0]);
   };
 
   useEffect(() => {
     getApi();
+    const favoritesRecipes = getLocalStorage('favoriteRecipes');
+    const newFavorites = favoritesRecipes || [];
+    const teste = newFavorites?.some((fav) => fav.id === correctId);
+    console.log(teste);
+    setLiked(teste);
   }, []);
 
   const structuringRecipe = () => {
@@ -44,17 +55,65 @@ function RecipeInProgress() {
     structuringRecipe();
   }, [obj]);
 
+  const shareRecipe = () => {
+    navigator.clipboard.writeText(`http://localhost:3000/${local[1]}/${local[2]}`);
+    setCopiedLink('Link copied!');
+  };
+
+  const addFavorite = (favoritesRecipes) => {
+    const favorite = {
+      id: local[1] === 'meals' ? obj.idMeal : obj.idDrink,
+      type: local[1] === 'meals' ? 'meal' : 'drink',
+      nationality: obj.strArea ? obj.strArea : '',
+      category: obj.strCategory,
+      alcoholicOrNot: obj.strAlcoholic ? obj.strAlcoholic : '',
+      name: local[1] === 'meals' ? obj.srtMeal : obj.srtDrink,
+      image: local[1] === 'meals' ? obj.strMealThumb : obj.strDrinkThumb,
+    };
+    const newFavorites = favoritesRecipes || [];
+    setLocalStorage('favoriteRecipes', [...newFavorites, favorite]);
+  };
+
+  const deletFavorite = (favoritesRecipes) => {
+    const removeFavorite = favoritesRecipes.filter((recipe) => recipe.id !== correctId);
+    setLocalStorage('favoriteRecipes', removeFavorite);
+  };
+
+  const favoriteRecipe = () => {
+    setLiked(!liked);
+    const favoritesRecipes = getLocalStorage('favoriteRecipes');
+    if (!liked) {
+      addFavorite(favoritesRecipes);
+    } else {
+      deletFavorite(favoritesRecipes);
+    }
+  };
+
   return (
     <div>
       <img alt="Algo" data-testid="recipe-photo" />
       <img alt="Category" />
       <h3 data-testid="recipe-category">{obj.strCategory}</h3>
-      <button type="button" data-testid="share-btn">
-        <img alt="Algo" />
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ shareRecipe }
+      >
+        <img src={ ShareIcon } alt="Share Icon" />
       </button>
-      <button type="button" data-testid="favorite-btn">
-        <img alt="Algo" />
+      <button
+        type="button"
+        onClick={ favoriteRecipe }
+        data-testid="favorite-btn"
+        src={ liked ? favorited : desFavorited }
+      >
+        {liked
+          ? <img src={ favorited } alt="Favorite Icon" />
+          : (
+            <img src={ desFavorited } alt="Desfavorite Icon" />
+          ) }
       </button>
+      <h1>{copiedLink}</h1>
       <h1 data-testid="recipe-title">{obj.strMeal}</h1>
       <fieldset>
         INGREDIENTES
