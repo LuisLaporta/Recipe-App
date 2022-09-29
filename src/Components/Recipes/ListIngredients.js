@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getLocalStorage, setLocalStorage } from '../../Services/LocalStorage';
 
-function ListIngredients({ index, m, local, idRecipe }) {
+function ListIngredients({ index, m, local, idRecipe, finishiRecipe }) {
   const [done, setDone] = useState('');
   const meals = { [idRecipe]: [] };
   const drinks = { [idRecipe]: [] };
@@ -24,7 +24,6 @@ function ListIngredients({ index, m, local, idRecipe }) {
 
   const handleChange = (target) => {
     const { name } = target;
-    console.log(target);
     setDone(!done);
     let inProgress = {};
     const teste = getLocalStorage('inProgressRecipes');
@@ -33,11 +32,13 @@ function ListIngredients({ index, m, local, idRecipe }) {
       teste.meals[idRecipe] = [...teste.meals[idRecipe], name];
       inProgress = { meals: teste.meals, drinks: teste.drinks };
       setLocalStorage('inProgressRecipes', inProgress);
+      finishiRecipe(teste.meals[idRecipe]);
     }
     if (local === 'drinks' && !done) {
       teste.drinks[idRecipe] = [...teste.drinks[idRecipe], name];
       inProgress = { drinks: teste.drinks, meals: teste.meals };
       setLocalStorage('inProgressRecipes', inProgress);
+      finishiRecipe(teste.drinks[idRecipe]);
     }
   };
 
@@ -67,6 +68,7 @@ ListIngredients.propTypes = {
   m: PropTypes.string.isRequired,
   local: PropTypes.string.isRequired,
   idRecipe: PropTypes.string.isRequired,
+  finishiRecipe: PropTypes.func.isRequired,
 };
 
 export default ListIngredients;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import ListIngredients from './ListIngredients';
 import ShareIcon from '../../images/shareIcon.svg';
 import favorited from '../../images/blackHeartIcon.svg';
@@ -14,10 +14,13 @@ function RecipeInProgress() {
   const [ingredients, setIngredients] = useState([]);
   const [copiedLink, setCopiedLink] = useState('');
   const [liked, setLiked] = useState();
+  const [finishi, setFinishi] = useState({});
+  const [disabled, setDisabled] = useState(true);
   const { pathname } = useLocation();
   const local = pathname.split('/');
   const correctUrl = local[1] === 'meals' ? 'themealdb' : 'thecocktaildb';
   const correctId = local[1] === 'meals' ? obj.idMeal : obj.idDrink;
+  const history = useHistory();
 
   const getApi = async () => {
     const response = await fetch(`https://www.${correctUrl}.com/api/json/v1/1/lookup.php?i=${local[2]}`);
@@ -26,13 +29,17 @@ function RecipeInProgress() {
     return setObj(correctInfo[0]);
   };
 
+  const finishiRecipe = (inprogress) => {
+    setFinishi(inprogress);
+  };
+
   useEffect(() => {
     getApi();
     const favoritesRecipes = getLocalStorage('favoriteRecipes');
     const newFavorites = favoritesRecipes || [];
     const teste = newFavorites?.some((fav) => fav.id === correctId);
-    console.log(teste);
     setLiked(teste);
+    finishiRecipe();
   }, []);
 
   const structuringRecipe = () => {
@@ -59,6 +66,11 @@ function RecipeInProgress() {
     navigator.clipboard.writeText(`http://localhost:3000/${local[1]}/${local[2]}`);
     setCopiedLink('Link copied!');
   };
+
+  useEffect(() => {
+    console.log(finishi);
+    setDisabled(finishi?.length !== ingredients.length);
+  }, [finishi]);
 
   const addFavorite = (favoritesRecipes) => {
     const favorite = {
@@ -124,6 +136,7 @@ function RecipeInProgress() {
             m={ m }
             local={ local[1] }
             idRecipe={ local[2] }
+            finishiRecipe={ finishiRecipe }
           />
         ))}
       </fieldset>
@@ -132,6 +145,8 @@ function RecipeInProgress() {
       <button
         type="button"
         data-testid="finish-recipe-btn"
+        disabled={ disabled }
+        onClick={ () => history.push('/done-recipes') }
       >
         FINISH RECIPE
       </button>
