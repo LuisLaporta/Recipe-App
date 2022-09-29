@@ -1,25 +1,40 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { act } from 'react-dom/test-utils';
+
 import RecipesContext from '../../Context/RecipesContext';
 
 const LIMIT_NUMBER = 12;
 
 function Recipes() {
-  const { searchedRecipe } = useContext(RecipesContext);
+  const { searchedRecipe, categorySelected } = useContext(RecipesContext);
+
   const [recipesFound, setRecipesFound] = useState([]);
-  const { pathname } = useLocation();
+
+  const history = useHistory();
 
   useEffect(() => {
     const limitRecipes = searchedRecipe?.slice(0, LIMIT_NUMBER);
-    setRecipesFound(limitRecipes);
+    act(() => {
+      setRecipesFound(limitRecipes);
+    });
   }, [searchedRecipe]);
+
+  const { pathname } = history.location;
+
+  const goToDetails = (pathName, recipe) => (
+    history.push(`${pathName}/${recipe.idMeal || recipe.idDrink}`)
+  );
 
   return (
     <div>
       { recipesFound?.map((recipe, index) => (
         <div
-          key={ pathname === '/meals' ? recipe.idMeal : recipe.idDrink }
+          // key={ pathname === '/meals' ? recipe.idMeal : recipe.idDrink }
+          key={ index }
+          role="presentation"
           data-testid={ `${index}-recipe-card` }
+          onClick={ () => goToDetails(pathname, recipe) }
         >
           <img
             src={ pathname === '/meals' ? recipe.strMealThumb : recipe.strDrinkThumb }
@@ -27,8 +42,11 @@ function Recipes() {
             data-testid={ `${index}-card-img` }
           />
           <h3 data-testid={ `${index}-card-name` }>
-            {pathname === '/meals' ? recipe.strMeal : recipe.strDrink}
+            {history.location.pathname === '/meals' ? recipe.strMeal : recipe.strDrink}
           </h3>
+          <h4 data-testid={ `${index}-card-category` }>
+            { categorySelected === 'all' ? recipe.strCategory : categorySelected }
+          </h4>
         </div>
       ))}
     </div>
