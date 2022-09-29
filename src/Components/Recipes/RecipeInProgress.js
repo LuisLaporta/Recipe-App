@@ -20,6 +20,7 @@ function RecipeInProgress() {
   const local = pathname.split('/');
   const correctUrl = local[1] === 'meals' ? 'themealdb' : 'thecocktaildb';
   const correctId = local[1] === 'meals' ? obj.idMeal : obj.idDrink;
+  const correctThumb = local[1] === 'meals' ? obj.strMealThumb : obj.strDrinkThumb;
   const history = useHistory();
 
   const getApi = async () => {
@@ -68,7 +69,6 @@ function RecipeInProgress() {
   };
 
   useEffect(() => {
-    console.log(finishi);
     setDisabled(finishi?.length !== ingredients.length);
   }, [finishi]);
 
@@ -86,24 +86,26 @@ function RecipeInProgress() {
     setLocalStorage('favoriteRecipes', [...newFavorites, favorite]);
   };
 
-  const deletFavorite = (favoritesRecipes) => {
-    const removeFavorite = favoritesRecipes.filter((recipe) => recipe.id !== correctId);
-    setLocalStorage('favoriteRecipes', removeFavorite);
-  };
+  // const deletFavorite = (favoritesRecipes) => {
+  //   const removeFavorite = favoritesRecipes.filter((recipe) => recipe.id !== correctId);
+  //   setLocalStorage('favoriteRecipes', removeFavorite);
+  // };
 
   const favoriteRecipe = () => {
     setLiked(!liked);
     const favoritesRecipes = getLocalStorage('favoriteRecipes');
-    if (!liked) {
-      addFavorite(favoritesRecipes);
-    } else {
-      deletFavorite(favoritesRecipes);
-    }
+    addFavorite(favoritesRecipes);
+    // if (!liked) {
+    //   addFavorite(favoritesRecipes);
+    // }
+    // else {
+    //   deletFavorite(favoritesRecipes);
+    // }
   };
 
   return (
     <div>
-      <img alt="Algo" data-testid="recipe-photo" />
+      <img src={ correctThumb } alt="Algo" data-testid="recipe-photo" />
       <img alt="Category" />
       <h3 data-testid="recipe-category">{obj.strCategory}</h3>
       <button
