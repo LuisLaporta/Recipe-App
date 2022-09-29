@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 function RecipeDetails({ mealId, drinkId }) {
   const [dataMeals, setDataMeals] = useState([]);
   const [dataDrinksID, setDataDrinksID] = useState([]);
-  console.log(mealId);
-  console.log(drinkId);
   useEffect(() => {
     const fetchMeals = async () => {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`);
@@ -17,7 +15,6 @@ function RecipeDetails({ mealId, drinkId }) {
       const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`);
       const data = await response.json();
       setDataDrinksID(data.drinks);
-      console.log(dataDrinksID);
     };
     const validFetch = () => (mealId === undefined ? fetchDrinks() : fetchMeals());
     validFetch();
@@ -213,9 +210,6 @@ function RecipeDetails({ mealId, drinkId }) {
           }
         </div>
       )}
-
-      {console.log(dataMeals)}
-      {console.log(dataDrinksID)}
     </div>
   );
 }
