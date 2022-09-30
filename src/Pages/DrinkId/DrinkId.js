@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import RecipeDetails from '../../Components/Recipes/RecipeDetails';
-import Carrousel from '../../Components/Carrousel/Carrousel';
+import Carrousel from '../../Components/Recipes/Carrousel';
+import ButtonStartRecipe from '../../Components/Recipes/ButtonStartRecipe';
 
 function DrinkId({ match: { params: { id } } }) {
   return (
     <div>
       <RecipeDetails drinkId={ id } />
       <Carrousel drinkId={ id } />
+      <ButtonStartRecipe />
     </div>
   );
 }
