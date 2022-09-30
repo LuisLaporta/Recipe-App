@@ -79,7 +79,7 @@ function RecipeInProgress() {
       nationality: obj.strArea ? obj.strArea : '',
       category: obj.strCategory,
       alcoholicOrNot: obj.strAlcoholic ? obj.strAlcoholic : '',
-      name: local[1] === 'meals' ? obj.srtMeal : obj.srtDrink,
+      name: local[1] === 'meals' ? obj.strMeal : obj.strDrink,
       image: local[1] === 'meals' ? obj.strMealThumb : obj.strDrinkThumb,
     };
     const newFavorites = favoritesRecipes || [];
