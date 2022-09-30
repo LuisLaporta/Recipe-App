@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import './Recipes.css';
 
 function RecipeDetails({ mealId, drinkId }) {
   const [dataMeals, setDataMeals] = useState([]);
@@ -24,9 +25,10 @@ function RecipeDetails({ mealId, drinkId }) {
     <div>
       {mealId === undefined ? (
         <div>
-          {dataDrinksID?.map((drink) => (
+          {dataDrinksID.map((drink) => (
             <div key={ drink.strDrink }>
               <img
+                className="image"
                 data-testid="recipe-photo"
                 alt={ drink.strDrink }
                 src={ drink.strDrinkThumb }
@@ -115,6 +117,7 @@ function RecipeDetails({ mealId, drinkId }) {
             dataMeals.map((recipe) => (
               <div key={ recipe.strMeal }>
                 <img
+                  className="image"
                   data-testid="recipe-photo"
                   alt={ recipe.strMeal }
                   src={ recipe.strMealThumb }
@@ -196,7 +199,7 @@ function RecipeDetails({ mealId, drinkId }) {
                 </p>
                 <iframe
                   data-testid="video"
-                  width="560"
+                  width="369"
                   height="315"
                   src={ recipe.strYoutube }
                   title="YouTube video player"

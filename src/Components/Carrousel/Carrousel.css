@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  overflow-x: auto;
+}
+
+.caroseul {
+  margin: 0px 5px 0px 0px;
+  scroll-behavior: smooth;
+}
+
+.images {
+  width: 200px;
+}
