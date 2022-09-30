@@ -7,7 +7,7 @@ import ButtonShareAndFavorite from '../../Components/Recipes/ButtonShareAndFavor
 function MealId({ match: { params: { id } } }) {
   return (
     <div>
-      <ButtonShareAndFavorite />
+      <ButtonShareAndFavorite mealId={ id } />
       <RecipeDetails mealId={ id } />
       <Carrousel mealId={ id } />
       <ButtonStartRecipe mealId={ id } />

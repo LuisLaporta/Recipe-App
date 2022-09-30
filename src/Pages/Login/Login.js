@@ -34,6 +34,12 @@ function Login() {
     setLocalStorage('user', { email: inputState.emailInput });
     setLocalStorage('mealsToken', 1);
     setLocalStorage('drinksToken', 1);
+    setLocalStorage('doneRecipes', []);
+    setLocalStorage('favoriteRecipes', []);
+    setLocalStorage('inProgressRecipes', {
+      drinks: {},
+      meals: {},
+    });
     history.push('/meals');
   };
 
