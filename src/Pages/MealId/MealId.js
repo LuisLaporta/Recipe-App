@@ -2,13 +2,15 @@ import PropTypes from 'prop-types';
 import RecipeDetails from '../../Components/Recipes/RecipeDetails';
 import Carrousel from '../../Components/Recipes/Carrousel';
 import ButtonStartRecipe from '../../Components/Recipes/ButtonStartRecipe';
+import ButtonShareAndFavorite from '../../Components/Recipes/ButtonShareAndFavorite';
 
 function MealId({ match: { params: { id } } }) {
   return (
     <div>
+      <ButtonShareAndFavorite />
       <RecipeDetails mealId={ id } />
       <Carrousel mealId={ id } />
-      <ButtonStartRecipe />
+      <ButtonStartRecipe mealId={ id } />
     </div>
   );
 }

@@ -8,7 +8,7 @@ function DrinkId({ match: { params: { id } } }) {
     <div>
       <RecipeDetails drinkId={ id } />
       <Carrousel drinkId={ id } />
-      <ButtonStartRecipe />
+      <ButtonStartRecipe drinkId={ id } />
     </div>
   );
 }
