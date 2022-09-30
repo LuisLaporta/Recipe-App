@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { getLocalStorage, setLocalStorage } from '../../Services/LocalStorage';
 
 function ListIngredients({ index, m, local, idRecipe, finishiRecipe }) {
-  const [done, setDone] = useState('');
+  const [done, setDone] = useState(true);
   const meals = { [idRecipe]: [] };
   const drinks = { [idRecipe]: [] };
 
   useEffect(() => {
+    setDone(false);
     const teste = getLocalStorage('inProgressRecipes');
     if (!teste) setLocalStorage('inProgressRecipes', { meals, drinks });
 

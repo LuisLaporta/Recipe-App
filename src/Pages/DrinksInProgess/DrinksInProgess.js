@@ -1,10 +1,10 @@
 import React from 'react';
 import RecipeInProgress from '../../Components/Recipes/RecipeInProgress';
 
-function DrinksInProgess() {
+function DrinksInProgess({ match: { params: { id } } }) {
   return (
     <div>
-      <RecipeInProgress />
+      <RecipeInProgress drinkId={ id } />
     </div>
   );
 }

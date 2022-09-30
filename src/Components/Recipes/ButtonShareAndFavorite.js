@@ -41,8 +41,12 @@ function ButtonShareAndFavorite({ mealId, drinkId }) {
     validFetch();
   }, []);
 
+  const screen = pathname.includes('meals') ? 'meals' : 'drinks';
+
   const handleClickShare = () => {
-    navigator.clipboard.writeText(`${window.location.origin}${pathname}`);
+    const path = pathname === `/${screen}/${mealId || drinkId}/in-progress`
+      ? `/${screen}/${mealId || drinkId}` : pathname;
+    navigator.clipboard.writeText(`${window.location.origin}${path}`);
     setCopiedLink('Link copied!');
   };
 
@@ -56,7 +60,7 @@ function ButtonShareAndFavorite({ mealId, drinkId }) {
     const favorite = {
       id: dataDrinksID.length === 0 ? dataMeals[0].idMeal : dataDrinksID[0].idDrink,
       type: dataDrinksID.length === 0 ? 'meal' : 'drink',
-      nationality: dataMeals.strArea ? dataMeals[0].strArea : '',
+      nationality: mealId ? dataMeals[0].strArea : '',
       category: dataDrinksID.length === 0
         ? dataMeals[0].strCategory : dataDrinksID[0].strCategory,
       alcoholicOrNot: drinkId !== undefined
