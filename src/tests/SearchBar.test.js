@@ -64,27 +64,6 @@ describe('Testando o componente SearchBar', () => {
     await waitFor(() => expect(screen.getByText(/mealid/i)).toBeInTheDocument(), { timeout: 3000 });
   });
 
-  test('Verifica se buscar por um drink e retornar apenas um item, o usuario é redirecionado para outra página', async () => {
-    renderWithRouter(<App />, '/drinks');
-
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(oneDrink),
-    });
-
-    const iconSearch = screen.getByTestId(SEARCH_ICON);
-    userEvent.click(iconSearch);
-
-    const textInput = screen.getByTestId(TEXT_INPUT);
-    const radioName = screen.getByTestId('name-search-radio');
-    const buttonSearch = screen.getByTestId(BUTTO_ID);
-
-    userEvent.type(textInput, 'Aquamarine');
-    userEvent.click(radioName);
-    userEvent.click(buttonSearch);
-
-    await waitFor(() => expect(screen.getByText(/drinkid/i)).toBeInTheDocument(), { timeout: 3000 });
-  });
-
   test('Verifica se buscar por ingredient retorna todas as receitas com este ingredient', async () => {
     renderWithRouter(<App />, '/meals');
 

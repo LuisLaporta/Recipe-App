@@ -1,21 +1,33 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import RecipeInProgress from '../../Components/Recipes/RecipeInProgress';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 
-function MealsInProgess({ match: { params: { id } } }) {
+import RecipeInProgress from '../../Components/Recipes/RecipeInProgress';
+import requestRecipesApi from '../../Services/RequestRecipesApi';
+
+function MealsInProgess() {
+  const { pathname } = useLocation();
+
+  const { id } = useParams();
+
+  const [recipeDetails, setRecipeDetails] = useState({});
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      const response = pathname.includes('/meals')
+        ? await requestRecipesApi(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+        : await requestRecipesApi(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+      return pathname.includes('/meals')
+        ? setRecipeDetails(response.meals[0])
+        : setRecipeDetails(response.drinks[0]);
+    };
+    fetchApi();
+  }, [pathname]);
+
   return (
     <div>
-      <RecipeInProgress mealId={ id } />
+      <RecipeInProgress recipeDetails={ recipeDetails } />
     </div>
   );
 }
-
-MealsInProgess.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }),
-  }).isRequired,
-};
 
 export default MealsInProgess;

@@ -30,7 +30,6 @@ function Recipes() {
     <div>
       { recipesFound?.map((recipe, index) => (
         <div
-          // key={ pathname === '/meals' ? recipe.idMeal : recipe.idDrink }
           key={ index }
           role="presentation"
           data-testid={ `${index}-recipe-card` }
