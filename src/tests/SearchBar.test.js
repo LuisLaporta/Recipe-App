@@ -7,7 +7,6 @@ import oneMeal from '../../cypress/mocks/oneMeal';
 import App from '../App';
 import mealIngredients from '../../cypress/mocks/mealIngredients';
 import meals from '../../cypress/mocks/meals';
-import oneDrink from '../../cypress/mocks/oneDrink';
 
 const SEARCH_ICON = 'search-top-btn';
 const TEXT_INPUT = 'search-input';
