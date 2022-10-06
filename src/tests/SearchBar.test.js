@@ -147,31 +147,4 @@ describe('Testando o componente SearchBar', () => {
     const firstRecipeByIngredient = await screen.findByText('Brown Stew Chicken');
     expect(firstRecipeByIngredient).toBeInTheDocument();
   });
-
-  test('Verifica se buscar por First Letter com mais de uma letra, é retornado um alerta de erro', async () => {
-    jest.spyOn(global, 'fetch').mockImplementation(fetch);
-    // global.alert = jest.fn();
-    renderWithRouter(<App />, '/drinks');
-
-    const recipePhoto = await screen.findByTestId('0-card-img');
-    expect(recipePhoto).toBeInTheDocument();
-
-    const iconSearch = screen.getByTestId(SEARCH_ICON);
-    expect(iconSearch).toBeInTheDocument();
-    userEvent.click(iconSearch);
-
-    const textInput = screen.getByTestId(TEXT_INPUT);
-    const radioFirstLetter = screen.getByTestId('first-letter-search-radio');
-    const buttonSearch = screen.getByTestId(BUTTON_SEARCH_BY_FILTER);
-
-    expect(textInput).toBeInTheDocument();
-    expect(radioFirstLetter).toBeInTheDocument();
-    expect(buttonSearch).toBeInTheDocument();
-
-    userEvent.type(textInput, 'Chicken');
-    userEvent.click(radioFirstLetter);
-    userEvent.click(buttonSearch);
-
-    // expect(global.alert).toHaveBeenCalledTimes(1);
-  });
 });
