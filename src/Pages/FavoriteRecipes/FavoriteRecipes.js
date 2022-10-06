@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { getLocalStorage, setLocalStorage } from '../../Services/LocalStorage';
 import icon from '../../images/shareIcon.svg';
 import favIcon from '../../images/blackHeartIcon.svg';
+import Header from '../../Components/Header/Header';
 
 function FavoriteRecipes() {
   const [favoriteList, setFavoriteList] = useState([]);
@@ -42,6 +43,7 @@ function FavoriteRecipes() {
 
   return (
     <section className="FavoriteRecipe">
+      <Header title="Favorite Recipes" disabledSearch={ false } />
       <div className="filterContainer">
         <button
           type="button"

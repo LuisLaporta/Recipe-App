@@ -14,6 +14,7 @@ export const MEAL_CATEGORY = 'Vegetarian';
 export const MEAL_ALCOHOLIC_OR_NOT = '';
 export const MEAL_IMAGE = 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg';
 export const MEAL_TAGS = ['Pasta', 'Curry'];
+
 export const DRINK_NAME = 'GG';
 export const DRINK_AREA = '';
 export const DRINK_CATEGORY = 'Ordinary Drink';
