@@ -11,16 +11,18 @@ function Header({ title, disabledSearch }) {
 
   const history = useHistory();
 
+  // data-testid="profile-top-btn"
+
   return (
     <div>
       <button
         type="button"
         onClick={ () => history.push('/profile') }
-        src={ profileIcon }
+        // src={ profileIcon }
       >
         <img
-          src={ profileIcon }
           data-testid="profile-top-btn"
+          src={ profileIcon }
           alt="Profile Icon"
         />
       </button>

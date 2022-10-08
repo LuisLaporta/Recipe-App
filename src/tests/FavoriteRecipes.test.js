@@ -59,6 +59,17 @@ describe('Testa o componente FavoriteRecipes.', () => {
 
     expect(drinkName).not.toBeInTheDocument();
     expect(mealName).toBeInTheDocument();
+
+    const allButton = screen.getByRole('button', { name: 'All' });
+    expect(allButton).toBeInTheDocument();
+
+    userEvent.click(allButton);
+
+    const drinkNameAfter = screen.queryByText(DRINK_NAME);
+    const mealNameAfter = screen.queryByText(MEAL_NAME);
+
+    expect(drinkNameAfter).toBeInTheDocument();
+    expect(mealNameAfter).toBeInTheDocument();
   });
 
   test('Testa se, ao clicar no botão de compartilhar, o link é copiado.', () => {
