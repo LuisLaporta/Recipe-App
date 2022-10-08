@@ -1,0 +1,54 @@
+.start-recipe-btn {
+  bottom: 0;
+  position: fixed;
+}
+
+.favorite-button {
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+  bottom: 350px;
+}
+
+.favorite-button img {
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+  height: 28px;
+}
+
+.share-button {
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+  bottom: 350px;
+}
+
+.button-back {
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+  bottom: 350px;
+  height: 25px;
+}
+
+.button-back img {
+  height: 28px;
+}
+
+.recommendation-card {
+  height: 30px;
+  margin: 0 10px;
+  width: 155px;
+}
+
+.recommendation-card img {
+  height: 134.85px;
+  left: 12px;
+  top: 898px;
+  width: 163.35px;
+}
+
+.section-recommendation {
+  display: flex;
+  height: 225px;
+  overflow-x: scroll;
+  width: 100%;
+}
+

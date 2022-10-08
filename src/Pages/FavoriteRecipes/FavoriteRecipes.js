@@ -3,19 +3,20 @@ import copy from 'clipboard-copy';
 import { Link } from 'react-router-dom';
 import icon from '../../images/shareIcon.svg';
 import favIcon from '../../images/blackHeartIcon.svg';
+import Header from '../../Components/Header/Header';
 
 function FavoriteRecipes() {
   const [msg, setMsg] = useState(false);
   const [favorite, setFavorite] = useState([]);
   const [typeBtn, setTypeBtn] = useState('');
   const hiddenCopiedMessageTime = 3000;
-  // imprimi na tela por 3 seg Link copied! e fovoritar
+
   const shareRecipe = (type, id) => {
     copy(`${window.location.origin}/${type}s/${id}`);
     setMsg(true);
     setTimeout(() => setMsg(false), hiddenCopiedMessageTime);
   };
-  // faz um useEffect localStorage
+
   const selectedFav = JSON.parse(localStorage.getItem('favoriteRecipes'));
   useEffect(() => {
     setFavorite(selectedFav);
@@ -35,6 +36,7 @@ function FavoriteRecipes() {
   };
   return (
     <section className="FavoriteRecipe">
+      <Header title="Favorite Recipes" disabledSearch={ false } />
       <div className="filterContainer">
         <button
           type="button"

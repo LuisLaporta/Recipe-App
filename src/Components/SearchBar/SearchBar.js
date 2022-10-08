@@ -13,20 +13,17 @@ function SearchBar() {
 
   useEffect(() => {
     if (searchedRecipe?.length === 1) {
-      console.log(pathname);
       const redirect = pathname === '/meals'
         ? `/meals/${searchedRecipe[0].idMeal}`
         : `/drinks/${searchedRecipe[0].idDrink}`;
 
       history.push(redirect);
-      console.log(redirect);
     }
   }, [searchedRecipe]);
 
   const handleClick = async () => {
     const recipe = await getRecipe({ inputSearch, typeRadio, pathname });
     setSearchedRecipe(recipe);
-    console.log('setttou');
   };
 
   return (

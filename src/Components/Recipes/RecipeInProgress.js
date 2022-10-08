@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
 import { useLocation, useHistory } from 'react-router-dom';
 import ListIngredients from './ListIngredients';
-// import { getLocalStorage } from '../../Services/LocalStorage';
 import ButtonShareAndFavorite from './ButtonShareAndFavorite';
 
 const arrayNum = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
   '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
 
-function RecipeInProgress({ mealId, drinkId }) {
+function RecipeInProgress({ recipeDetails }) {
   const [obj, setObj] = useState({});
   const [ingredients, setIngredients] = useState([]);
   const [finishi, setFinishi] = useState({});
@@ -49,7 +49,6 @@ function RecipeInProgress({ mealId, drinkId }) {
       return result;
     });
     setIngredients(array);
-    console.log(array);
   };
 
   useEffect(() => {
@@ -66,7 +65,7 @@ function RecipeInProgress({ mealId, drinkId }) {
       <img alt="Category" />
       <h3 data-testid="recipe-category">{obj.strCategory}</h3>
       <h1 data-testid="recipe-title">{obj.strMeal}</h1>
-      <ButtonShareAndFavorite mealId={ mealId } drinkId={ drinkId } />
+      <ButtonShareAndFavorite recipeDetails={ recipeDetails } />
       <fieldset>
         INGREDIENTES
         {ingredients?.map((m, index) => (
@@ -95,8 +94,7 @@ function RecipeInProgress({ mealId, drinkId }) {
 }
 
 RecipeInProgress.propTypes = {
-  mealId: PropTypes.string.isRequired,
-  drinkId: PropTypes.string.isRequired,
+  recipeDetails: PropTypes.shape({}).isRequired,
 };
 
 export default RecipeInProgress;

@@ -1,17 +1,15 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
 import renderWithRouter from './Helpers/RenderWithRouter';
 import Meals from '../Pages/Foods/Meals';
-import oneMeal from '../../cypress/mocks/oneMeal';
 import App from '../App';
-import mealIngredients from '../../cypress/mocks/mealIngredients';
-import meals from '../../cypress/mocks/meals';
-import oneDrink from '../../cypress/mocks/oneDrink';
+import fetch from '../../cypress/mocks/fetch';
 
 const SEARCH_ICON = 'search-top-btn';
 const TEXT_INPUT = 'search-input';
-const BUTTO_ID = 'exec-search-btn';
+const BUTTON_SEARCH_BY_FILTER = 'exec-search-btn';
 
 describe('Testando o componente SearchBar', () => {
   test('Verifica se o input de pesquisa está na tela', () => {
@@ -34,7 +32,7 @@ describe('Testando o componente SearchBar', () => {
     expect(screen.getByLabelText(/first letter/i)).toBeInTheDocument();
   });
 
-  test('Verifica se o button de buscar esta na tela', () => {
+  test('Verifica se o button de buscar está na tela', () => {
     renderWithRouter(<Meals />);
 
     const iconSearch = screen.getByTestId(SEARCH_ICON);
@@ -43,87 +41,110 @@ describe('Testando o componente SearchBar', () => {
     expect(screen.getByRole('button', { name: /buscar/i })).toBeInTheDocument();
   });
 
-  test('Verifica se buscar por uma receita e retornar apenas um item, o usuario é redirecionado para outra página', async () => {
-    renderWithRouter(<App />, '/meals');
+  test('Verifica se buscar por First Letter retorna todas as receitas com esta letra', async () => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
+    renderWithRouter(<App />, '/drinks');
 
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(oneMeal),
-    });
+    const recipePhoto = await screen.findByTestId('6-card-img');
+    expect(recipePhoto).toBeInTheDocument();
+
+    const iconSearch = screen.getByTestId(SEARCH_ICON);
+    expect(iconSearch).toBeInTheDocument();
+    userEvent.click(iconSearch);
+
+    const textInput = screen.getByTestId(TEXT_INPUT);
+    const radioFirstLetter = screen.getByTestId('first-letter-search-radio');
+    const buttonSearch = screen.getByTestId(BUTTON_SEARCH_BY_FILTER);
+
+    expect(textInput).toBeInTheDocument();
+    expect(radioFirstLetter).toBeInTheDocument();
+    expect(buttonSearch).toBeInTheDocument();
+
+    userEvent.type(textInput, 'a');
+    userEvent.click(radioFirstLetter);
+    userEvent.click(buttonSearch);
+
+    const firstRecipeDrink = await screen.findByTestId('0-card-img');
+    expect(firstRecipeDrink).toBeInTheDocument();
+  });
+
+  test('Verifica se ao buscar pelo nome da comida e apenas houver uma receita correspondente, o usuário será redirecionado para a página', async () => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
+    const { history } = renderWithRouter(<App />, '/meals');
+
+    const recipePhoto = await screen.findByTestId('1-card-img');
+    expect(recipePhoto).toBeInTheDocument();
 
     const iconSearch = screen.getByTestId(SEARCH_ICON);
     userEvent.click(iconSearch);
 
     const textInput = screen.getByTestId(TEXT_INPUT);
-    userEvent.type(textInput, 'arrabiata');
-
     const radioName = screen.getByTestId('name-search-radio');
-    const buttonSearch = screen.getByTestId(BUTTO_ID);
+    const buttonSearch = screen.getByTestId(BUTTON_SEARCH_BY_FILTER);
+
+    expect(textInput).toBeInTheDocument();
+    expect(radioName).toBeInTheDocument();
+    expect(buttonSearch).toBeInTheDocument();
+
+    userEvent.type(textInput, 'Arrabiata');
     userEvent.click(radioName);
     userEvent.click(buttonSearch);
 
-    await waitFor(() => expect(screen.getByText(/mealid/i)).toBeInTheDocument(), { timeout: 3000 });
+    const firstRecipeDrink = await screen.findByTestId('recipe-photo');
+    expect(firstRecipeDrink).toBeInTheDocument();
+    expect(history.location.pathname).toBe('/meals/52771');
   });
 
-  test('Verifica se buscar por um drink e retornar apenas um item, o usuario é redirecionado para outra página', async () => {
-    renderWithRouter(<App />, '/drinks');
+  test('Verifica se ao buscar pelo nome da bebida e apenas houver uma receita correspondente, o usuário será redirecionado para a página', async () => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
+    const { history } = renderWithRouter(<App />, '/drinks');
 
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(oneDrink),
-    });
+    const recipePhoto = await screen.findByTestId('2-card-img');
+    expect(recipePhoto).toBeInTheDocument();
 
     const iconSearch = screen.getByTestId(SEARCH_ICON);
     userEvent.click(iconSearch);
 
     const textInput = screen.getByTestId(TEXT_INPUT);
     const radioName = screen.getByTestId('name-search-radio');
-    const buttonSearch = screen.getByTestId(BUTTO_ID);
+    const buttonSearch = screen.getByTestId(BUTTON_SEARCH_BY_FILTER);
+
+    expect(textInput).toBeInTheDocument();
+    expect(radioName).toBeInTheDocument();
+    expect(buttonSearch).toBeInTheDocument();
 
     userEvent.type(textInput, 'Aquamarine');
     userEvent.click(radioName);
     userEvent.click(buttonSearch);
 
-    await waitFor(() => expect(screen.getByText(/drinkid/i)).toBeInTheDocument(), { timeout: 3000 });
+    const firstRecipeDrink = await screen.findByTestId('recipe-photo');
+    expect(firstRecipeDrink).toBeInTheDocument();
+    expect(history.location.pathname).toBe('/drinks/178319');
   });
 
-  test('Verifica se buscar por ingredient retorna todas as receitas com este ingredient', async () => {
+  test('Verifica se ao buscar pelo ingrediente da comida o resultado é renderizado na tela.', async () => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
     renderWithRouter(<App />, '/meals');
 
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(mealIngredients),
-    });
+    const recipePhoto = await screen.findByTestId('3-card-img');
+    expect(recipePhoto).toBeInTheDocument();
 
     const iconSearch = screen.getByTestId(SEARCH_ICON);
     userEvent.click(iconSearch);
 
     const textInput = screen.getByTestId(TEXT_INPUT);
-    const radioIngredient = screen.getByTestId('ingredient-search-radio');
-    const buttonSearch = screen.getByTestId(BUTTO_ID);
+    const radioName = screen.getByTestId('ingredient-search-radio');
+    const buttonSearch = screen.getByTestId(BUTTON_SEARCH_BY_FILTER);
 
-    userEvent.type(textInput, 'salmon');
-    userEvent.click(radioIngredient);
+    expect(textInput).toBeInTheDocument();
+    expect(radioName).toBeInTheDocument();
+    expect(buttonSearch).toBeInTheDocument();
+
+    userEvent.type(textInput, 'Chicken');
+    userEvent.click(radioName);
     userEvent.click(buttonSearch);
 
-    await waitFor(() => expect(screen.getByTestId('0-card-name')).toBeInTheDocument(), { timeout: 3000 });
-  });
-
-  test('Verifica se buscar por First Letter retorna todas as receitas com esta letra', async () => {
-    renderWithRouter(<App />, '/meals');
-
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(meals),
-    });
-
-    const iconSearch = screen.getByTestId(SEARCH_ICON);
-    userEvent.click(iconSearch);
-
-    const textInput = screen.getByTestId(TEXT_INPUT);
-    const radioFirstLetter = screen.getByTestId('first-letter-search-radio');
-    const buttonSearch = screen.getByTestId(BUTTO_ID);
-
-    userEvent.type(textInput, 'L');
-    userEvent.click(radioFirstLetter);
-    userEvent.click(buttonSearch);
-
-    await waitFor(() => expect(screen.getByTestId('0-card-name')).toBeInTheDocument(), { timeout: 3000 });
+    const firstRecipeByIngredient = await screen.findByText('Brown Stew Chicken');
+    expect(firstRecipeByIngredient).toBeInTheDocument();
   });
 });

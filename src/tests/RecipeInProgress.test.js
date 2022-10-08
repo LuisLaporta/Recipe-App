@@ -1,24 +1,25 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
 import App from '../App';
 import RenderWithRouter from './Helpers/RenderWithRouter';
-import oneMeal from '../../cypress/mocks/oneMeal';
-import favorited from '../images/blackHeartIcon.svg';
-import desFavorited from '../images/whiteHeartIcon.svg';
-import oneDrink from '../../cypress/mocks/oneDrink';
+import {
+  DESCRIPTION_MEAL_PATHNAME, DESCRIPTION_DRINK_PATHNAME,
+  SHARE_BTN_TEST_ID, FAVORITE_BTN_TEST_ID, FAVORITE_KEY_LOCAL_STORAGE,
+} from './Helpers/ConstantsTest';
+import {
+  MOCK_FAVORITE_RECIPE_MEAL_BEFORE, MOCK_FAVORITE_RECIPE_MEAL_AFTER,
+} from './Helpers/UtilsMocks';
+import { setLocalStorage, getLocalStorage } from '../Services/LocalStorage';
+import fetch from '../../cypress/mocks/fetch';
 
 const INITIAL_ENTRIES = '/meals/52771/in-progress';
 const FAV_BTN = 'favorite-btn';
 
 describe('Testa o componente RecipeInProgress', () => {
-  beforeEach(() => {
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(oneMeal),
-    });
-  });
-
   test('Verifica se o Titulo e a Categoria da Receita aparace na tela', async () => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
     RenderWithRouter(<App />, INITIAL_ENTRIES);
 
     expect(await screen.findByRole('heading', { level: 3, name: /Vegetarian/i })).toBeInTheDocument();
@@ -26,6 +27,7 @@ describe('Testa o componente RecipeInProgress', () => {
   });
 
   test('Verifica se a lista de ingredientes da Receita aparace na tela', async () => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
     RenderWithRouter(<App />, INITIAL_ENTRIES);
 
     expect(screen.getByText(/ingredientes/i)).toBeInTheDocument();
@@ -33,6 +35,7 @@ describe('Testa o componente RecipeInProgress', () => {
   });
 
   test('Verifica se as instruções da Receita aparacem na tela', async () => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
     RenderWithRouter(<App />, INITIAL_ENTRIES);
 
     expect(screen.getByText(/instructions/i)).toBeInTheDocument();
@@ -40,6 +43,7 @@ describe('Testa o componente RecipeInProgress', () => {
   });
 
   test('Verifica se todos botoẽs de curtir e compartilhar aparacem na tela', async () => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
     RenderWithRouter(<App />, INITIAL_ENTRIES);
 
     expect(await screen.findByTestId('share-btn')).toBeInTheDocument();
@@ -47,37 +51,48 @@ describe('Testa o componente RecipeInProgress', () => {
   });
 
   test('Verifica se o botão "Finishi Recipe" aparace na tela e desabilitado', async () => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
     RenderWithRouter(<App />, INITIAL_ENTRIES);
 
     expect(await screen.findByRole('button', { name: /Finish Recipe/i })).toBeDisabled();
   });
 
   test('Verifica se clicar no botão de compartilhar a url é copiado para o clipboard e aparece a mensagem "Link Copied"', async () => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
     navigator.clipboard = {
       writeText: jest.fn(),
     };
-    RenderWithRouter(<App />, INITIAL_ENTRIES);
 
-    const shareBtn = await screen.findByTestId('share-btn');
-    userEvent.click(shareBtn);
+    RenderWithRouter(<App />, DESCRIPTION_DRINK_PATHNAME);
 
-    expect(await screen.findByText(/Link Copied/i)).toBeInTheDocument();
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('http://localhost:3000/meals/52771');
+    const shareButton = await screen.findByTestId(SHARE_BTN_TEST_ID);
+    expect(shareButton).toBeInTheDocument();
+    userEvent.click(shareButton);
+
+    const shareMessage = screen.getByText(/Link copied!/i);
+    expect(shareMessage).toBeInTheDocument();
   });
 
   test('Verifica se clicar no botão de favoritar a receita é favoritada', async () => {
-    RenderWithRouter(<App />, INITIAL_ENTRIES);
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
 
-    const favoriteBtn = await screen.findByTestId(FAV_BTN);
-    expect(favoriteBtn).toHaveAttribute('src', desFavorited);
-    userEvent.click(favoriteBtn);
+    setLocalStorage(FAVORITE_KEY_LOCAL_STORAGE, MOCK_FAVORITE_RECIPE_MEAL_BEFORE);
 
-    expect(favoriteBtn).toHaveAttribute('src', favorited);
-    const favRecipe = JSON.parse(window.localStorage.getItem('favoriteRecipes'));
-    expect(favRecipe[0].id).toBe('52771');
+    RenderWithRouter(<App />, DESCRIPTION_MEAL_PATHNAME);
+    const favoriteListBefore = getLocalStorage(FAVORITE_KEY_LOCAL_STORAGE);
+
+    expect(favoriteListBefore).not.toBe(null);
+
+    const blackHeartButton = screen.getByTestId(FAVORITE_BTN_TEST_ID);
+    userEvent.click(blackHeartButton);
+
+    const favoriteListAfter = getLocalStorage(FAVORITE_KEY_LOCAL_STORAGE);
+
+    expect(favoriteListAfter).toEqual(MOCK_FAVORITE_RECIPE_MEAL_AFTER);
   });
 
   test('Verifica se clicar no ingrediente ele é riscado da lista e adicionado ao localStorage', async () => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
     RenderWithRouter(<App />, INITIAL_ENTRIES);
 
     const inputsIngredients = await screen.findAllByRole('checkbox');
@@ -92,9 +107,7 @@ describe('Testa o componente RecipeInProgress', () => {
   });
 
   test('Verifica se clicar no ingrediente ele é riscado da lista e adicionado ao localStorage, tela de drinks', async () => {
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(oneDrink),
-    });
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
     RenderWithRouter(<App />, '/drinks/178319/in-progress');
 
     const inputsIngredients = await screen.findAllByRole('checkbox');
@@ -108,23 +121,8 @@ describe('Testa o componente RecipeInProgress', () => {
     expect(progressRecipe.drinks[178319]).toEqual(['2 oz Hpnotiq']);
   });
 
-  test('Verifica se clicar no botão de favoritar a receita é favoritada, tela de drinks', async () => {
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(oneDrink),
-    });
-    RenderWithRouter(<App />, '/drinks/178319/in-progress');
-
-    const favoriteBtn = await screen.findByTestId(FAV_BTN);
-    expect(favoriteBtn).toHaveAttribute('src', desFavorited);
-    userEvent.click(favoriteBtn);
-
-    expect(favoriteBtn).toHaveAttribute('src', favorited);
-    const favRecipe = JSON.parse(window.localStorage.getItem('favoriteRecipes'));
-    console.log(favRecipe);
-    expect(favRecipe[1].id).toBe('178319');
-  });
-
   test('Verifica se clicar no ingrediente ele é riscado da lista e adicionado ao localStorage', async () => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetch);
     RenderWithRouter(<App />, INITIAL_ENTRIES);
 
     const finishiBtn = await screen.findByRole('button', { name: /Finish Recipe/i });
