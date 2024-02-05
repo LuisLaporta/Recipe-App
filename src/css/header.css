@@ -1,0 +1,74 @@
+.header-container {
+  background-color: #fff;
+  width: 100%;
+  height: 18.375vh;
+}
+
+.title-container{
+  background-color: #FCDC36;
+  width: 100%;
+  height: 6.5vh;
+}
+
+.recipe-icon{
+  width: 11.8333vw;
+  height: 4.91vh;
+  position: absolute;
+  top: 0.75vh;;
+  left: 7.22vw;
+}
+
+.recipe-title{
+  width: 30.3139vw;
+  height: 2.12125vh;
+  position: absolute;
+  top: 2.5975vh;
+  left: 24.825vw;
+}
+
+.btn{
+  border: none;
+  background-color: #FCDC36;
+}
+
+.search-btn{
+  width: 7.4583vw;
+  height: 3.35625vh;
+  position: absolute;
+  top: 0.875vh;
+  left: 73.3333vw;
+}
+
+.profile-btn{
+  width: 7.975vw;
+  height: 3.58875vh;
+  position: absolute;
+  top: 0.75vh;
+  left: 84.7222vw;
+}
+
+.icon-page{
+  width: 11.203vw;
+  height: 3.69125vh;
+  position: absolute;
+  top: 10.375vh;
+  left: 44.4444vw;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Epilogue');
+
+.title-page{
+  width: 40.8333vw;
+  height: 2.625vh;
+  position: absolute;
+  top: 15.75vh;
+  left: 29.72vw;
+  font-family: 'Epilogue';
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 21px;
+  letter-spacing: 0.105em;
+  text-align: center;
+  color: #41197F;
+}
