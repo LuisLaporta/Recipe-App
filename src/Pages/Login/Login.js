@@ -1,6 +1,9 @@
 import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { setLocalStorage } from '../../Services/LocalStorage';
+import iconLogin from '../../images/iconLogin.svg';
+import subIcon from '../../images/subIconLogin.svg';
+import '../../css/login.css';
 
 const MIN_NUMERO_PASSWORD = 6;
 
@@ -44,7 +47,12 @@ function Login() {
   };
 
   return (
-    <fieldset>
+    <section className="login-container">
+      <div className="icon-container">
+        <img src={ iconLogin } alt="Icon Login" className="icon-login" />
+      </div>
+      <img src={ subIcon } alt="Tomato icon" className="subIcon-login" />
+      <h1 className="title-login">LOGIN</h1>
       <form>
         <input
           placeholder="email"
@@ -53,6 +61,7 @@ function Login() {
           name="emailInput"
           value={ inputState.emailInput }
           onChange={ handleChange }
+          className="email-input input"
         />
         <input
           placeholder="password"
@@ -61,17 +70,19 @@ function Login() {
           name="passwordInput"
           value={ inputState.passwordInput }
           onChange={ handleChange }
+          className="pass-input input"
         />
         <button
           type="button"
           data-testid="login-submit-btn"
           disabled={ btnState }
           onClick={ handleClick }
+          className="btn-login"
         >
-          Enter
+          ENTER
         </button>
       </form>
-    </fieldset>
+    </section>
   );
 }
 

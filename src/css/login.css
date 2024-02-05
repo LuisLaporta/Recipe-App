@@ -1,0 +1,114 @@
+.login-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.icon-container {
+  width: 100vw;
+  height: 52.75vh;
+  background-color: #41197F;
+}
+
+.icon-login {
+  width: 55vw;
+  height: 19.65625vh;
+  position: absolute;
+  top: 9.89625vh;
+  left: 22.5vw;
+  filter: drop-shadow(0.7857142686843872px 13.357142448425293px 10.214285850524902px 0px rgba(33, 18, 55, 0.2));
+}
+
+.subIcon-login {
+  width: 100vw;
+  height: 34.875vh;
+  position: relative;
+  top: -21.25vh;
+  left: 0;
+  filter: drop-shadow(0px 7px 15px 0px rgba(68, 73, 85, 0.25));
+}
+
+@import url('https://fonts.googleapis.com/css?family=Epilogue');
+
+.title-login {
+  width: 50.55556vw;
+  height: 2.625vh;
+  color: #41197F;
+  position: absolute;
+  top: 65.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Epilogue';
+  font-size: 5.55556vw;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 2.625vh;
+  letter-spacing: 0.165em;
+  text-align: center;
+}
+
+input {
+  width: 76.67vw;
+  height: 5vh;
+  border-radius: 5px;
+  border: 0.5px solid #41197F;
+}
+
+.input::placeholder {
+  color: #41197F;
+  padding-left: 7px;
+  font-family: 'Epilogue';
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.input:focus {
+  padding-left: 7px;
+}
+
+.input:focus::placeholder {
+  color: transparent;
+}
+
+.email-input {
+  position: absolute;
+  top: 70.5vh;
+  left: 11.67vw;
+}
+.email-input::placeholder {
+  width: 36px;
+  height: 14px;
+}
+
+.pass-input {
+  position: absolute;
+  top: 76.625vh;
+  left: 11.67vw;
+}
+
+.pass-input::placeholder {
+  width: 70px;
+  height: 14px;
+}
+
+.btn-login {
+  background-color: #FCC436;
+  color: #FFFFFF;
+  width: 76.67vw;
+  height: 5vh;
+  position: absolute;
+  top: 82.75vh;
+  left: 11.67vw;
+  border-radius: 5px;
+  border-color: transparent;
+  animation-timing-function: ease-out;
+  animation-duration: 300ms;
+  font-family: 'Epilogue';
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
