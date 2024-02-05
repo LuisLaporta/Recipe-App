@@ -1,0 +1,59 @@
+.filter-container{
+  width: 92.5778vw;
+  height: 7.46375vh;
+  position: absolute;
+  left: 3.6111vw;
+}
+
+.drop-down {
+  width: 92.5778vw;
+  height: 7.46375vh;
+  position: relative;
+  top: 18.5vh;
+  left: 3.6111vw;
+  margin-bottom: 6.25vh;
+}
+
+
+@import url('https://fonts.googleapis.com/css?family=Epilogue');
+
+.flex {
+  display: flex;
+  justify-content: space-around;
+}
+
+.flex div {
+  width: 12.5778vw;
+  height: 200%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex div button {
+  width: 12.5778vw;
+  height: 5.66vh;
+  border-radius: 100%;
+  border: 1.81px;
+  background-color: transparent;
+  border: 1.81px solid #FCC436
+}
+
+.flex div button img {
+  width: 6.84vw;
+  height: 3.14vh;
+}
+
+.flex div p {
+  width: 9.81vw;
+  height: 1.125vh;
+  padding-top: 5px;
+  color:#797D86;
+  font-family: 'Epilogue';
+  font-size: 9px;
+  font-weight: 300;
+  line-height: 9px;
+  letter-spacing: 0em;
+  text-align: center;
+}
