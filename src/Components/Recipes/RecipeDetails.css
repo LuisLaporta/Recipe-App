@@ -1,54 +1,251 @@
-.start-recipe-btn {
-  bottom: 0;
-  position: fixed;
+.header-details {
+  width: 100%;
+  height: 162px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.info-header {
+  display: flex;
+  position: absolute;
+  top: 0;
+}
+
+.btn {
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
 }
 
 .favorite-button {
-  background-color: rgba(255, 255, 255, 0);
-  border: 0;
-  bottom: 350px;
+  width: 6.36vw;
+  height: 2.54vh;
+  position: absolute;
+  top: 2.375vh;
+  left: 85.27vw;
+  border-color: #FCC436;
 }
 
 .favorite-button img {
-  background-color: rgba(255, 255, 255, 0);
-  border: 0;
-  height: 28px;
+  height: 2.5375vh;
 }
 
 .share-button {
-  background-color: rgba(255, 255, 255, 0);
-  border: 0;
-  bottom: 350px;
+  width: 5.5556vw;
+  height: 2.5vh;
+  position: absolute;
+  top: 2.5vh;
+  left: 76.668vw;
+  bottom: 43.75vh;
+}
+
+.share-button img {
+  height: 2.5vh;
 }
 
 .button-back {
-  background-color: rgba(255, 255, 255, 0);
-  border: 0;
-  bottom: 350px;
+  top: 2.5vh;
+  left: 66.95vw;
+  position: absolute;
+  bottom: 43.75vh;
   height: 25px;
 }
 
 .button-back img {
-  height: 28px;
+  height: 3.5vh;
+}
+
+.recipe-category {
+  width: 37.78vw;
+  height: 1.375vh;
+  position: absolute;
+  top: 3.125vh;
+  left: 17.5vw;
+  font-family: 'Epilogue';
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #FCC436;
+}
+
+.title {
+  width: 40.833vw;
+  height: 2.625vh;
+  position: absolute;
+  top: 10.125vh;
+  left: 30.2806vw;
+  font-family: 'Epilogue';
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 21px;
+  letter-spacing: 0.105em;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.typography {
+  font-family: 'Epilogue';
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #1A1B1C;
+}
+
+.ingredient-titlte {
+  width: 39.6667vw;
+  height: 2.625vh;
+  margin-top: 4.375vh;
+  position: relative;
+  left: 6.69vw;
+}
+
+.details-tipo {
+  border-radius: 5.35px;
+  border: 0.55px;
+  border: 0.55px solid #B1B1B1;
+  padding: 17px;
+  font-family: 'Epilogue';
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #1A1B1C;
+}
+
+.ingredients-recipe-details {
+  width: 93.0556vw;
+  height: auto;
+  margin-top: 1vh;
+  position: relative;
+  left: 3.8889vw;
+}
+
+.ingredients-recipe-details ul {
+  margin-bottom: 0;
+}
+
+.instructions-title {
+  width: 39.6667vw;
+  height: 2.625vh;
+  margin-top: 4.125vh;
+  position: relative;
+  left: 6.3917vw;
+}
+
+.instructions-recipe-details {
+  width: 93.0556vw;
+  height: auto;
+  margin-top: 1.625vh;
+  position: relative;
+  left: 3.6111vw;
+}
+
+.reco-title {
+  width: 56.9444vw;
+  height: 2.625vh;
+  margin-top: 3.625vh;
+  position: relative;
+  left: 6.3889vw;
+}
+
+.section-recommendation {
+  margin-top: 1vh;
 }
 
 .recommendation-card {
-  height: 30px;
-  margin: 0 10px;
-  width: 155px;
+  height: 3.75vh;
+  margin: 0 2.7778vw;
+  width: 43.0556vw;
 }
 
 .recommendation-card img {
-  height: 134.85px;
-  left: 12px;
-  top: 898px;
-  width: 163.35px;
+  height: 16.85625vh;
+  left: 3.3333vw;
+  top: 112.25vh;
+  width: 45.375vw;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.rec-title {
+  width: 45.375vw;
+  height: 3.92vh;
+  border: 0.52px solid #B1B1B1;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.recommendation-card h4 {
+  width: 39.6667vw;
+  height: 1.5vh;
+  font-family: 'Epilogue';
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 10.01px 5.71px 9.35px 14.69px;
 }
 
 .section-recommendation {
   display: flex;
-  height: 225px;
+  height: 28.125vh;
   overflow-x: scroll;
   width: 100%;
+}
+
+.div-recommendation-recipe-details {
+  margin-bottom: 2.47375vh;
+}
+
+.kuhaku {
+  height: 7.875vh;
+}
+
+.start-recipe-btn {
+  width: 93.3333vw;
+  height: 5vh;
+  left: 3.3333vw;
+  border: 0.52px solid #FCC436;
+  border-radius: 5px;
+  margin-bottom: 1.25vh;
+  bottom: 0;
+  position: fixed;
+  background-color: #FCC436;
+  color: #FFFFFF;
+  text-transform: uppercase;
+}
+
+.label-check {
+  display: flex;
+  cursor: pointer;
+}
+
+.input-check {
+  display: none;
+}
+
+.label-check::before {
+  content: '';
+  width: 4.7222vw;
+  height: 2.125vh;
+  border: 2px solid #FCC436;
+  border-radius: 3px;
+  background-color: #fff;
+  margin-right: 1.3889vw;
+  display: flex;
+  align-items: center;
+}
+
+.label-check.checked::before {
+  content: '\2713';
+  font-size: 17px;
+  color: #FCC436;
+}
+
+.label-check.checked p {
+  text-decoration: line-through;
 }
 

@@ -89,29 +89,31 @@ function RecipeDetails() {
 
   return (
     <main className="main-description">
-      <header className="header-details">
-        <img
-          className="img-recipe-details"
-          data-testid="recipe-photo"
-          src={ recipeDetails.strMealThumb || recipeDetails.strDrinkThumb }
-          alt={ recipeDetails.strMeal || recipeDetails.strDrink }
-        />
-        <div className="header-details-title">
-          <h1 data-testid="recipe-title">
-            {recipeDetails.strMeal || recipeDetails.strDrink}
-          </h1>
-          <h2 data-testid="recipe-category">
+      <header
+        className="header-details"
+        style={ {
+          backgroundImage: `url(${recipeDetails.strMealThumb
+            || recipeDetails.strDrinkThumb})`,
+        } }
+      >
+        <div className="info-header">
+          <h2 data-testid="recipe-category" className="recipe-category">
             {pathname.includes('/meals')
               ? recipeDetails.strCategory
               : recipeDetails.strAlcoholic}
           </h2>
+          <ButtonShareAndFavorite recipeDetails={ recipeDetails } />
         </div>
-        <ButtonShareAndFavorite recipeDetails={ recipeDetails } />
+        <div className="header-details-title">
+          <h1 data-testid="recipe-title" className="title">
+            {recipeDetails.strMeal || recipeDetails.strDrink}
+          </h1>
+        </div>
       </header>
 
       <div className="div-ingredients-recipe-details">
-        <h3>Ingredients</h3>
-        <div className="ingredients-recipe-details">
+        <h3 className="ingredient-titlte typography">Ingredients</h3>
+        <div className="ingredients-recipe-details details-tipo">
           <ul>
             {ingredientsKeysFiltered.map((key, index) => {
               const measurements = recipeDetails[`strMeasure${index + 1}`];
@@ -130,8 +132,8 @@ function RecipeDetails() {
       </div>
 
       <div className="div-instructions-recipe-details">
-        <h3>Instructions</h3>
-        <div className="instructions-recipe-details">
+        <h3 className="instructions-title typography">Instructions</h3>
+        <div className="instructions-recipe-details details-tipo">
           <p data-testid="instructions">{recipeDetails.strInstructions}</p>
           <div className="recipe-details-youtube">
             {recipeDetails.strYoutube && (
@@ -151,7 +153,7 @@ function RecipeDetails() {
       </div>
 
       <div className="div-recommendation-recipe-details">
-        <h3>Recommended</h3>
+        <h3 className="reco-title typography">Recommended</h3>
         <section className="section-recommendation">
           {recommendations.selectedRecommendations.map((recommendation, index) => (
             <div
@@ -170,9 +172,11 @@ function RecipeDetails() {
                 src={ recommendation.strMealThumb || recommendation.strDrinkThumb }
                 alt={ recommendation.strMeal || recommendation.strDrink }
               />
-              <h4 data-testid={ `${index}-recommendation-title` }>
-                {recommendation.strMeal || recommendation.strDrink}
-              </h4>
+              <div className="rec-title">
+                <h4 data-testid={ `${index}-recommendation-title` }>
+                  {recommendation.strMeal || recommendation.strDrink}
+                </h4>
+              </div>
             </div>
           ))}
         </section>
