@@ -1,0 +1,118 @@
+.filterContainer {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 2.125vh;
+}
+
+.filterContainer div {
+  width: 12.5778vw;
+  height: 200%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.filterContainer div button {
+  width: 15.3556vw;
+  height: 6.91vh;
+  border-radius: 100%;
+  background-color: transparent;
+  border: 2.81px solid #FCC436
+}
+
+.filterContainer div button img {
+  width: 7.84vw;
+  height: 4.14vh;
+}
+
+.filterContainer div p {
+  width: 9.81vw;
+  height: 1.125vh;
+  padding-top: 1.25vh;
+  color:#797D86;
+  font-family: 'Epilogue';
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 9px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+.favCardsContainer {
+  margin-top: 3.5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.card {
+  display: flex;
+  width: 88.3333vw;
+  height: 16.875vh;
+  margin-bottom: 1.875vh;
+}
+
+.img-info {
+  display: flex;
+  width: 100%;
+}
+
+.img-info a {
+  height: 16.875vh;
+}
+
+.img-card {
+  width: 45.3744vw;
+  height: 16.85675vh;
+  border-radius: 5px 0 0 5px;
+}
+
+.info-card {
+  width: 50%;
+  height: 16.875vh;
+  padding: 1.25vw;
+  padding-top: 3.25vh;
+  padding-left: 5.7361vw;
+}
+
+.info-card a h4 {
+  color: #1A1B1C;
+  font-family: 'Epilogue';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.info-card h2 {
+  color: #797D86;
+  font-family: 'Epilogue';
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.info-card input {
+  margin-top: 3.125vh;
+  border: none;
+  width: 6.3583vw;
+  height: 2.537375vh;
+}
+
+.inp-share, .inp-fav {
+  top: 1.875vh;
+  position: relative;
+}
+
+.inp-share {
+  margin-right: 4.1667vw;
+}
+
+.free {
+  width: 100%;
+  height: 6.5vh;
+}

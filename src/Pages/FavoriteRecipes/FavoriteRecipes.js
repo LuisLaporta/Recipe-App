@@ -3,7 +3,12 @@ import copy from 'clipboard-copy';
 import { Link } from 'react-router-dom';
 import icon from '../../images/shareIcon.svg';
 import favIcon from '../../images/blackHeartIcon.svg';
+import allIcon from '../../images/allIcon.svg';
+import foodIcon from '../../images/mealsIcon.svg';
+import drinkIcon from '../../images/drinksIcon.svg';
 import Header from '../../Components/Header/Header';
+import Footer from '../../Components/Footer/Footer';
+import '../../css/favorite.css';
 
 function FavoriteRecipes() {
   const [msg, setMsg] = useState(false);
@@ -20,9 +25,8 @@ function FavoriteRecipes() {
   const selectedFav = JSON.parse(localStorage.getItem('favoriteRecipes'));
   useEffect(() => {
     setFavorite(selectedFav);
-    // eslint-disable-next-line
   }, []);
-  // remove favoritar
+
   const removeFavorites = (id) => {
     const selectedFavorite = JSON.parse(
       localStorage.getItem('favoriteRecipes'),
@@ -31,81 +35,94 @@ function FavoriteRecipes() {
       (recipe) => recipe.id !== id,
     );
     localStorage.setItem('favoriteRecipes', JSON.stringify(selectedRecipe));
-    console.log(selectedRecipe);
     setFavorite(selectedRecipe);
   };
   return (
     <section className="FavoriteRecipe">
-      <Header title="Favorite Recipes" disabledSearch={ false } />
-      <div className="filterContainer">
-        <button
-          type="button"
-          className="filter-food"
-          onClick={ () => setTypeBtn('meal') }
-          data-testid="filter-by-meal-btn"
-        >
-          Food
-        </button>
-        <button
-          type="button"
-          data-testid="filter-by-drink-btn"
-          onClick={ () => setTypeBtn('drink') }
-        >
-          Drinks
-        </button>
-        <button
-          type="button"
-          data-testid="filter-by-all-btn"
-          onClick={ () => setTypeBtn('') }
-        >
-          All
-        </button>
-        {msg && <span>Link copied!</span>}
-      </div>
-      <div className="favCardsContainer">
+      <Header title="Favorite" disabled={ false } />
+      <section className="filterContainer">
+        <div>
+          <button
+            type="button"
+            data-testid="filter-by-all-btn"
+            onClick={ () => setTypeBtn('') }
+          >
+            <img src={ allIcon } alt="All Icon" />
+          </button>
+          <p>All</p>
+        </div>
+        <div>
+          <button
+            type="button"
+            className="filter-food"
+            onClick={ () => setTypeBtn('meal') }
+            data-testid="filter-by-meal-btn"
+          >
+            <img src={ foodIcon } alt="Food Icon" />
+          </button>
+          <p>Food</p>
+        </div>
+        <div>
+          <button
+            type="button"
+            data-testid="filter-by-drink-btn"
+            onClick={ () => setTypeBtn('drink') }
+          >
+            <img src={ drinkIcon } alt="Drink Icon" />
+          </button>
+          <p>Drinks</p>
+        </div>
+      </section>
+      {msg && <span>Link copied!</span>}
+      <section className="favCardsContainer">
         {favorite
           && favorite
             .filter((element) => (!typeBtn ? element : element.type === typeBtn))
-            .map((recipe, index) => {
-              console.log(recipe);
-              return (
-                <section key={ index }>
+            .map((recipe, index) => (
+              <div key={ index } className="card">
+                <div className="img-info">
                   <Link to={ `/${recipe.type}s/${recipe.id}` }>
                     <img
                       data-testid={ `${index}-horizontal-image` }
                       src={ recipe.image }
                       alt="card"
-                      width="300px"
+                      className="img-card"
                     />
                   </Link>
-                  <Link to={ `/${recipe.type}s/${recipe.id}` }>
-                    <h4 data-testid={ `${index}-horizontal-name` }>
-                      {recipe.name}
-                    </h4>
-                  </Link>
-                  <h2 data-testid={ `${index}-horizontal-top-text` }>
-                    {recipe.type === 'meal'
-                      ? `${recipe.nationality} - ${recipe.category}`
-                      : recipe.alcoholicOrNot}
-                  </h2>
-                  <input
-                    data-testid={ `${index}-horizontal-share-btn` }
-                    type="image"
-                    src={ icon }
-                    alt="shareIcon"
-                    onClick={ () => shareRecipe(recipe.type, recipe.id) }
-                  />
-                  <input
-                    data-testid={ `${index}-horizontal-favorite-btn` }
-                    type="image"
-                    src={ favIcon }
-                    alt="favoriteIcon"
-                    onClick={ () => removeFavorites(recipe.id) }
-                  />
-                </section>
-              );
-            })}
-      </div>
+                  <div className="info-card">
+                    <Link to={ `/${recipe.type}s/${recipe.id}` }>
+                      <h4 data-testid={ `${index}-horizontal-name` }>
+                        {recipe.name}
+                      </h4>
+                    </Link>
+                    <h2 data-testid={ `${index}-horizontal-top-text` }>
+                      {recipe.type === 'meal'
+                        ? `${recipe.nationality} - ${recipe.category}`
+                        : recipe.alcoholicOrNot}
+                    </h2>
+                    <input
+                      data-testid={ `${index}-horizontal-share-btn` }
+                      type="image"
+                      src={ icon }
+                      alt="shareIcon"
+                      className="inp-share"
+                      onClick={ () => shareRecipe(recipe.type, recipe.id) }
+                    />
+                    <input
+                      data-testid={ `${index}-horizontal-favorite-btn` }
+                      type="image"
+                      src={ favIcon }
+                      alt="favoriteIcon"
+                      className="inp-fav"
+                      onClick={ () => removeFavorites(recipe.id) }
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+      </section>
+      <div className="free" />
+      <Footer />
     </section>
   );
 }
