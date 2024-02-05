@@ -48,8 +48,8 @@ function ListIngredients({ index, m, local, idRecipe, finishiRecipe }) {
       <label
         key={ index }
         htmlFor={ index }
-        style={ { textDecoration: done ? 'line-through' : 'none' } }
         data-testid={ `${index}-ingredient-step` }
+        className={ `label-check ${done ? 'checked' : ''}` }
       >
         <input
           type="checkbox"
@@ -57,8 +57,9 @@ function ListIngredients({ index, m, local, idRecipe, finishiRecipe }) {
           id={ index }
           checked={ done }
           onChange={ ({ target }) => handleChange(target) }
+          className="input-check"
         />
-        {m}
+        <p>{m}</p>
       </label>
     </div>
   );

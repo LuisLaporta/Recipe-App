@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { getLocalStorage, setLocalStorage } from '../../Services/LocalStorage';
+import backIcon from '../../images/backIcon.svg';
 import shareButtonImage from '../../images/shareIcon.svg';
 import whiteFavoriteButtonImage from '../../images/whiteHeartIcon.svg';
 import blackFavoriteButtonImage from '../../images/blackHeartIcon.svg';
@@ -59,30 +60,17 @@ function ButtonShareAndFavorite({ recipeDetails }) {
   };
 
   return (
-    <section className="share-favorite">
+    <section className="share-favorite btn">
       <button
         type="button"
-        className="button-back"
+        className="button-back btn"
         onClick={ () => window.history.back() }
       >
-        <img src="https://img.icons8.com/material-rounded/72/arrow-pointing-left.png" alt="button-back" />
+        <img src={ backIcon } alt="button-back" />
       </button>
 
       <button
-        className="favorite-button"
-        type="button"
-        data-testid="favorite-btn"
-        onClick={ addAndRemoveFavoriteRecipe }
-        src={ isFavoritedRecipe ? blackFavoriteButtonImage : whiteFavoriteButtonImage }
-      >
-        <img
-          src={ isFavoritedRecipe ? blackFavoriteButtonImage : whiteFavoriteButtonImage }
-          alt="favorite"
-        />
-      </button>
-
-      <button
-        className="share-button"
+        className="share-button btn"
         type="button"
         data-testid="share-btn"
         onClick={ shareRecipe }
@@ -93,7 +81,20 @@ function ButtonShareAndFavorite({ recipeDetails }) {
           alt="share"
         />
       </button>
-      {copiedLink && <span className="link-copied">Link copied!</span>}
+
+      <button
+        className="favorite-button btn"
+        type="button"
+        data-testid="favorite-btn"
+        onClick={ addAndRemoveFavoriteRecipe }
+        src={ isFavoritedRecipe ? blackFavoriteButtonImage : whiteFavoriteButtonImage }
+      >
+        <img
+          src={ isFavoritedRecipe ? blackFavoriteButtonImage : whiteFavoriteButtonImage }
+          alt="favorite"
+        />
+      </button>
+      {/* {copiedLink && <span className="link-copied">Link copied!</span>} */}
 
     </section>
   );
