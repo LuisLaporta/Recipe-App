@@ -29,3 +29,13 @@ Para instalar e utilizar a aplicação, siga os seguintes passos:
 1. Clone o repositório
 2. Instale as dependências com o comando <code>npm install</code> ou <code>yarn install</code>
 3. Inicie a aplicação com o comando <code>npm start</code> ou <code>yarn start</code>
+
+<h2>Tecnologias</h2>
+
+| HTML5 | CSS3 | JS | REACT |GIT |
+| :-- | :-- | :-- | :-- | :-- |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="50" height="50"/> | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="50" height="50" /> | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="50" height="50" /> | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg" width="50" height="50" />| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="50" height="50" /> |
+
+<h2>Visualização</h2>
+
+<img src="src/images/Captura de tela de 2024-02-12 13-17-44.png"/> <img src="src/images/Captura de tela de 2024-02-12 13-19-10.png"/> <img src="src/images/Captura de tela de 2024-02-12 13-19-35.png"/> <img src="src/images/Captura de tela de 2024-02-12 13-19-58.png"/> <img src="src/images/Captura de tela de 2024-02-12 13-20-17.png"/> <img src="src/images/Captura de tela de 2024-02-12 13-20-40.png"/> <img src="src/images/Captura de tela de 2024-02-12 13-21-16.png"/> <img src="src/images/Captura de tela de 2024-02-12 13-22-21.png"/>
